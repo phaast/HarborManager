@@ -1,0 +1,1358 @@
+---
+# ====== Page: Załogi i Role pracowników =====================
+id: 22
+identification: 
+  name: Załogi i Role pracowników
+  alias: ZALOGIROLEPLACOWNIKOW
+  title: Lista załóg i Role w załogach - HarborManager
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+javascript: 
+  execute-when-page-loads: |
+    $(document).ready(function () {
+        var ig$ = apex.region("myReport").widget();
+    
+        if (ig$) {
+            ig$.interactiveGrid("getViews", "grid").view$.on("click", "tr", function () {
+                setTimeout(function () {
+                    var selectedRecords = ig$.interactiveGrid("getSelectedRecords");
+                    if (selectedRecords.length > 0) {
+                        var lastSelectedRecord = selectedRecords[selectedRecords.length - 1];
+                        var firstColumnValue = lastSelectedRecord[Object.keys(lastSelectedRecord)[0]];
+                        console.log("Pierwsza kolumna ostatnio zaznaczonego wiersza:", firstColumnValue);
+    
+                        apex.item("P22_FILTR").setValue(firstColumnValue);
+                    }
+                }, 100);
+            });
+        }
+    });
+
+css: 
+  inline: |
+    .custom-alert {
+      padding: 10px;
+      border: 1px solid #d9534f;
+      background-color: #f8d7da;
+      color: #721c24;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    .custom-alert-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .custom-alert-icon {
+      font-size: 22px;
+      color: #d9534f;
+    }
+    
+    .custom-alert-title {
+      font-size: 14px;
+      font-weight: bold;
+      margin: 0;
+    }
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+help: 
+  help-text: |
+    <p>To find data enter a search term into the search dialog, or click on the column headings to limit the records returned.</p>
+    
+    <p>You can perform numerous functions by clicking the <strong>Actions</strong> button. This includes selecting the columns that are displayed / hidden and their display sequence, plus numerous data and format functions.  You can also define additional views of the data using the chart, group by, and pivot options.</p>
+    
+    <p>If you want to save your customizations select report, or click download to unload the data. Enter you email address and time frame under subscription to be sent the data on a regular basis.<p>
+    
+    <p>For additional information click Help at the bottom of the Actions menu.</p> 
+    
+    <p>Click the <strong>Reset</strong> button to reset the interactive report back to the default settings.</p>
+
+regions: 
+- # ====== Region: Zalogi ======================================
+  id: 105091042716526456
+  identification: 
+    name: Zalogi
+    type: Interactive Grid
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: ZALOGI
+    include-rowid-column: true
+
+  layout: 
+    sequence: 10
+    parent-region: Region1 # 195359140258944542
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: myReport
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 205617112570214603
+    edit: 
+      enabled: true
+      allowed-operations: 
+      - Add Row
+      - Update Row
+      - Delete Row
+      lost-update-type: Row Values
+      add-row-if-empty: true
+
+    performance: 
+      lazy-loading: false
+
+    appearance: 
+      select-first-row: true
+      fixed-row-height: true
+
+    pagination: 
+      type: Scroll
+      show-total-count: true
+
+    toolbar: 
+      show: true
+      controls: 
+      - Search Column Selection
+      - Search Field
+      - Actions Menu
+      - Reset Button
+      - Save Button
+
+    enable-users-to: 
+      save-public-report: false
+      flashback: true
+      define-chart-view: true
+      download: true
+
+    download: 
+      formats: 
+      - CSV
+      - HTML
+      - Excel
+      - PDF
+      send-as-email: true
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 206353203367385652
+      identification: 
+        name: Primary Report
+        alias: 2063533
+
+  columns: 
+  - # ====== Column: NR_ZALOGI ===================================
+    id: 205617270129214604
+    identification: 
+      column-name: NR_ZALOGI
+      type: Number Field
+
+    heading: 
+      heading: ID Załogi
+      alignment: end
+
+    settings: 
+      number-alignment: Start
+      virtual-keyboard: Decimal
+
+    layout: 
+      sequence: 30
+      column-alignment: end
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: true
+
+    source: 
+      type: Database Column
+      database-column: NR_ZALOGI
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      type: SQL Query (return single value)
+      sql-query-(return-single-value): SELECT MAX(NR_ZALOGI)+1 FROM ZALOGI
+      duplicate-copies-existing-value: false
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    enable-users-to: 
+      sort: false
+      hide: true
+
+  - # ====== Column: NAZWA =======================================
+    id: 205617387066214605
+    identification: 
+      column-name: NAZWA
+      type: Text Field
+
+    heading: 
+      heading: Nazwa Załogi
+      alignment: start
+
+    settings: 
+      trim-spaces: Leading and Trailing
+      text-case: NO CHANGE
+
+    layout: 
+      sequence: 40
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: true
+      maximum-length: 100
+
+    source: 
+      type: Database Column
+      database-column: NAZWA
+      data-type: VARCHAR2
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Distinct Column
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: DATA_ZALOZENIA ==============================
+    id: 205617434037214606
+    identification: 
+      column-name: DATA_ZALOZENIA
+      type: Date Picker
+
+    heading: 
+      heading: Data Założenia
+      alignment: center
+
+    settings: 
+      show-time: false
+      display-as: Popup
+      minimum-date: None
+      maximum-date: None
+      multiple-months: No
+      use-defaults: true
+
+    layout: 
+      sequence: 50
+      column-alignment: center
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: true
+
+    source: 
+      type: Database Column
+      database-column: DATA_ZALOZENIA
+      data-type: DATE
+      query-only: false
+      primary-key: false
+
+    default: 
+      type: SQL Query (return single value)
+      sql-query-(return-single-value): SELECT SYSDATE FROM DUAL
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      lov-type: Distinct Column
+      date-ranges: All
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: APEX$ROW_ACTION =============================
+    id: 205617534100214607
+    identification: 
+      column-name: APEX$ROW_ACTION
+      type: Actions Menu
+
+    layout: 
+      sequence: 20
+
+  - # ====== Column: APEX$ROW_SELECTOR ===========================
+    id: 205617656405214608
+    identification: 
+      column-name: APEX$ROW_SELECTOR
+      type: Row Selector
+
+    settings: 
+      enable-multi-select: true
+      show-select-all: true
+      hide-control: false
+
+    layout: 
+      sequence: 10
+
+    configuration: 
+      build-option: Commented Out # 104632398192525426
+
+  - # ====== Column: ROWID =======================================
+    id: 205617871494214610
+    identification: 
+      column-name: ROWID
+      type: Hidden
+
+    settings: 
+      value-protected: true
+
+    layout: 
+      sequence: 60
+
+    accessibility: 
+      value-identifies-row: false
+
+    source: 
+      type: Database Column
+      database-column: ROWID
+      data-type: ROWID
+      primary-key: true
+
+    session-state: 
+      data-type: VARCHAR2
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+  printing: 
+    page: 
+      size: Letter
+      orientation: Landscape
+      units: Inches
+      width: 11
+      height: 8.5
+      border-width: 0.5
+      border-color: '#666666'
+
+    page-header: 
+      font: Helvetica
+      font-weight: Normal
+      font-size: 12
+      font-color: '#000000'
+      alignment: center
+
+    column-headings: 
+      font: Helvetica
+      font-weight: Bold
+      font-size: 10
+      font-color: '#000000'
+      background-color: '#EEEEEE'
+
+    columns: 
+      font: Helvetica
+      font-weight: Normal
+      font-size: 10
+      font-color: '#000000'
+      background-color: '#FFFFFF'
+
+    page-footer: 
+      font: Helvetica
+      font-weight: Normal
+      font-size: 12
+      font-color: '#000000'
+      alignment: center
+
+- # ====== Region: Breadcrumb ==================================
+  id: 105094317833526460
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 104632925000525429
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  header-and-footer: 
+    footer-text: Przegląd oraz edycja dostępnych załóg/ról w załogach. Przypisanie pracowników do załóg oraz ról.
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: Region2 =====================================
+  id: 195358438215944535
+  identification: 
+    name: Region2
+    type: Static Content
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--removeHeader js-removeLandmark
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Lista załogi ================================
+  id: 195358570281944536
+  identification: 
+    name: Lista załogi
+    type: Interactive Grid
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select NR_PRZYPISANIA,
+             ID_PRAC,
+             NR_ZALOGI,
+             ID_ROLI
+        from PRACOWNICY_ZALOGI_ROLE WHERE NR_ZALOGI = :P22_FILTR
+    page-items-to-submit: 
+    - P22_FILTR
+
+  layout: 
+    sequence: 10
+    parent-region: Region2 # 195358438215944535
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 195358644508944537
+    edit: 
+      enabled: true
+      allowed-operations: 
+      - Add Row
+      - Update Row
+      - Delete Row
+      lost-update-type: Row Values
+      add-row-if-empty: true
+
+    performance: 
+      lazy-loading: false
+
+    appearance: 
+      select-first-row: true
+      fixed-row-height: true
+
+    pagination: 
+      type: Scroll
+      show-total-count: true
+
+    toolbar: 
+      show: true
+      controls: 
+      - Search Column Selection
+      - Search Field
+      - Actions Menu
+      - Reset Button
+      - Save Button
+
+    enable-users-to: 
+      save-public-report: false
+      flashback: true
+      define-chart-view: true
+      download: true
+
+    download: 
+      formats: 
+      - CSV
+      - HTML
+      - Excel
+      - PDF
+      send-as-email: true
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 201580990036530169
+      identification: 
+        name: Primary Report
+        alias: 2015810
+
+  columns: 
+  - # ====== Column: NR_PRZYPISANIA ==============================
+    id: 195358752598944538
+    identification: 
+      column-name: NR_PRZYPISANIA
+      type: Hidden
+
+    settings: 
+      value-protected: true
+
+    layout: 
+      sequence: 30
+
+    accessibility: 
+      value-identifies-row: false
+
+    source: 
+      type: Database Column
+      database-column: NR_PRZYPISANIA
+      data-type: NUMBER
+      query-only: true
+      primary-key: true
+
+    session-state: 
+      data-type: VARCHAR2
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    enable-users-to: 
+      sort: false
+
+  - # ====== Column: ID_PRAC =====================================
+    id: 195358814619944539
+    identification: 
+      column-name: ID_PRAC
+      type: Select List
+
+    heading: 
+      heading: Imię i nazwisko
+      alignment: start
+
+    layout: 
+      sequence: 40
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: true
+
+    list-of-values: 
+      type: SQL Query
+      sql-query: select (IMIE || ' ' || NAZWISKO) d, ID_PRAC r from PRACOWNICY
+      display-extra-values: true
+      display-null-value: true
+
+    source: 
+      type: Database Column
+      database-column: ID_PRAC
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Use List of Values
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: NR_ZALOGI ===================================
+    id: 195358991657944540
+    identification: 
+      column-name: NR_ZALOGI
+      type: Select List
+
+    heading: 
+      heading: Nazwa załogi
+      alignment: start
+
+    layout: 
+      sequence: 50
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: true
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: ZALOGI.NAZWA # 105108799487526557
+      display-extra-values: true
+      display-null-value: true
+
+    source: 
+      type: Database Column
+      database-column: NR_ZALOGI
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Use List of Values
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: ID_ROLI =====================================
+    id: 195359007933944541
+    identification: 
+      column-name: ID_ROLI
+      type: Select List
+
+    heading: 
+      heading: Rola w załodze
+      alignment: start
+
+    layout: 
+      sequence: 60
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: ROLE_PRACOWNIKOW.NAZWA # 105109425459526558
+      display-extra-values: true
+      display-null-value: true
+      null-display-value: Brak
+
+    source: 
+      type: Database Column
+      database-column: ID_ROLI
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Use List of Values
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: APEX$ROW_ACTION =============================
+    id: 205618889856214620
+    identification: 
+      column-name: APEX$ROW_ACTION
+      type: Actions Menu
+
+    layout: 
+      sequence: 20
+
+  - # ====== Column: APEX$ROW_SELECTOR ===========================
+    id: 205618950913214621
+    identification: 
+      column-name: APEX$ROW_SELECTOR
+      type: Row Selector
+
+    settings: 
+      enable-multi-select: true
+      show-select-all: true
+      hide-control: false
+
+    layout: 
+      sequence: 10
+
+  printing: 
+    page: 
+      size: Letter
+      orientation: Landscape
+      units: Inches
+      width: 11
+      height: 8.5
+      border-width: 0.5
+      border-color: '#666666'
+
+    page-header: 
+      font: Helvetica
+      font-weight: Normal
+      font-size: 12
+      font-color: '#000000'
+      alignment: center
+
+    column-headings: 
+      font: Helvetica
+      font-weight: Bold
+      font-size: 10
+      font-color: '#000000'
+      background-color: '#EEEEEE'
+
+    columns: 
+      font: Helvetica
+      font-weight: Normal
+      font-size: 10
+      font-color: '#000000'
+      background-color: '#FFFFFF'
+
+    page-footer: 
+      font: Helvetica
+      font-weight: Normal
+      font-size: 12
+      font-color: '#000000'
+      alignment: center
+
+- # ====== Region: Region1 =====================================
+  id: 195359140258944542
+  identification: 
+    name: Region1
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--removeHeader js-removeLandmark
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Tytuł =======================================
+  id: 205619298689214624
+  identification: 
+    name: Tytuł
+    type: Static Content
+
+  source: 
+    html-code: |
+      <h3 style="text-align: center;
+                  padding: 0px;
+                  margin: 0px;
+                  background-color: #beccd5">VV&emsp;LISTA ZAŁOGANTÓW&emsp;VV</h3>
+
+  layout: 
+    sequence: 20
+    parent-region: Region2 # 195358438215944535
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--removeHeader js-removeLandmark
+    - t-Region--scrollBody
+    - margin-top-none
+    - margin-bottom-none
+    - margin-right-none
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: ALERT_NO_KAPITAN ============================
+  id: 205619308859214625
+  identification: 
+    name: ALERT_NO_KAPITAN
+    type: Dynamic Content
+
+  source: 
+    language: PL/SQL
+    pl/sql-function-body-returning-a-clob: |
+      DECLARE
+          v_html CLOB := '';
+      BEGIN
+          FOR r IN (
+              SELECT 
+                  z.NAZWA AS ZALOGA_NAZWA
+              FROM 
+                  ZALOGI z
+              WHERE 
+                  NOT EXISTS (
+                      SELECT 1
+                      FROM PRACOWNICY_ZALOGI_ROLE pzr
+                      JOIN ROLE_PRACOWNIKOW rp ON pzr.ID_ROLI = rp.ID_ROLI
+                      WHERE pzr.NR_ZALOGI = z.NR_ZALOGI
+                        AND LOWER(rp.NAZWA) = 'kapitan'
+                  )
+          ) LOOP
+              v_html := v_html || 
+                  '<div class="custom-alert">' || 
+                  '  <div class="custom-alert-header">' || 
+                  '    <span class="custom-alert-icon" aria-hidden="true">&#9888;</span>' || 
+                  '    <h2 class="custom-alert-title">Załoga "' || r.ZALOGA_NAZWA || '" nie ma przypisanego kapitana!</h2>' || 
+                  '  </div>' || 
+                  '</div>';
+          END LOOP;
+      
+          RETURN v_html;
+      END;
+
+  layout: 
+    sequence: 40
+    parent-region: Region2 # 195358438215944535
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--removeHeader js-removeLandmark
+    - t-Region--scrollBody
+    - margin-bottom-none
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    performance: 
+      lazy-loading: false
+
+page-items: 
+- # ====== Page Item: P22_FILTR ================================
+  id: 205618362789214615
+  identification: 
+    name: P22_FILTR
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 40
+    region: No Parent
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: CREATE ======================================
+  id: 105093176915526459
+  identification: 
+    button-name: CREATE
+    label: Dodaj nową załogę
+
+  layout: 
+    sequence: 10
+    region: Zalogi # 105091042716526456
+    slot: RIGHT_OF_IR_SEARCH_BAR
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:23:&APP_SESSION.::&DEBUG.:23::'
+      page: 23 # Dodawanie załogi
+      clear-cache: 23
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: DialogRole ==================================
+  id: 195358329339944534
+  identification: 
+    button-name: DialogRole
+    label: Zobacz dostępne role
+
+  layout: 
+    sequence: 10
+    region: Region1 # 195359140258944542
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    alignment: Left center
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--large
+    - t-Button--iconLeft
+    - t-Button--hoverIconPush
+    - t-Button--stretch
+    icon: fa-th-list
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:24:&SESSION.::&DEBUG.:::'
+      page: 24 # Role Pracowników
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: DialogPracownicy ============================
+  id: 195359299314944543
+  identification: 
+    button-name: DialogPracownicy
+    label: Przejdź do listy pracowników
+
+  layout: 
+    sequence: 10
+    region: Region2 # 195358438215944535
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    alignment: Left center
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--large
+    - t-Button--iconLeft
+    - t-Button--hoverIconPush
+    - t-Button--stretch
+    icon: fa-th-list
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:20:&SESSION.::&DEBUG.:::'
+      page: 20 # Lista pracowników
+
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: Edit Report - Dialog Closed =========
+  id: 105093465995526459
+  identification: 
+    name: Edit Report - Dialog Closed
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Region
+    region: Zalogi # 105091042716526456
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 105093959413526460
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Zalogi # 105091042716526456
+
+    execution: 
+      sequence: 10
+      event: Edit Report - Dialog Closed # 105093465995526459
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: NewCrewView =========================
+  id: 205618649895214618
+  identification: 
+    name: NewCrewView
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P22_FILTR
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 205618751741214619
+    identification: 
+      name: Refresh
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Lista załogi # 195358570281944536
+
+    execution: 
+      sequence: 10
+      event: NewCrewView # 205618649895214618
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Zmiana w tabeli =====================
+  id: 205619473066214626
+  identification: 
+    name: Zmiana w tabeli
+
+  execution: 
+    sequence: 30
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: NATIVE_IG|REGION TYPE|interactivegridsave
+    selection-type: Region
+    region: Lista załogi # 195358570281944536
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 205619594104214627
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: ALERT_NO_KAPITAN # 205619308859214625
+
+    execution: 
+      sequence: 10
+      event: Zmiana w tabeli # 205619473066214626
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+processes: 
+- # ====== Process: Zalogi - Save Interactive Grid Data ========
+  id: 205617793204214609
+  identification: 
+    name: Zalogi - Save Interactive Grid Data
+    type: Interactive Grid - Automatic Row Processing (DML)
+    execution-chain: None
+    editable-region: Zalogi # 105091042716526456
+
+  settings: 
+    target-type: Region Source
+    prevent-lost-updates: true
+    lock-row: Yes
+    return-primary-key(s)-after-insert: true
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    execution-scope: For Created and Modified Rows
+
+- # ====== Process: Lista załogi - Save Interactive Grid Data ==
+  id: 205619005370214622
+  identification: 
+    name: Lista załogi - Save Interactive Grid Data
+    type: Interactive Grid - Automatic Row Processing (DML)
+    execution-chain: None
+    editable-region: Lista załogi # 195358570281944536
+
+  settings: 
+    target-type: Region Source
+    prevent-lost-updates: true
+    lock-row: Yes
+    return-primary-key(s)-after-insert: true
+
+  execution: 
+    sequence: 20
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    execution-scope: For Created and Modified Rows
+

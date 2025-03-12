@@ -1,0 +1,271 @@
+---
+- # ====== Text Message: UQ_PRACOWNICY_ZALOGI_ROLE =============
+  id: 213067056597016692
+  identification: 
+    name: UQ_PRACOWNICY_ZALOGI_ROLE
+
+  message: 
+    text: Pracownik może należeć do danej załogi tylko raz.
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 452273425
+
+- # ====== Text Message: STA_MAX_L_PASAZEROW ===================
+  id: 216927616133197041
+  identification: 
+    name: STA_MAX_L_PASAZEROW
+
+  message: 
+    text: Jednostka musi pomieścić co najmniej 0 osób.
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 469928195
+
+- # ====== Text Message: PRA_PLACA =============================
+  id: 217074128139326572
+  identification: 
+    name: PRA_PLACA
+
+  message: 
+    text: Płaca pracownika powinna wynosić co najmniej 100 PLN.
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 469909286
+
+- # ====== Text Message: STA_WYPORNOSC =========================
+  id: 253015482391375737
+  identification: 
+    name: STA_WYPORNOSC
+
+  message: 
+    text: Jednostka musi być w stanie wypierać co najmniej 0 ton ładunku.
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 469929185
+
+- # ====== Text Message: STA_SPALANIE_PALIWA ===================
+  id: 253016033340376965
+  identification: 
+    name: STA_SPALANIE_PALIWA
+
+  message: 
+    text: Jednostka musi spalać co najmniej 0 L paliwa.
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 469928643
+
+- # ====== Text Message: STA_MAX_DYSTANS =======================
+  id: 253023972825378115
+  identification: 
+    name: STA_MAX_DYSTANS
+
+  message: 
+    text: Jednostka powinna móc przepłynąć co najmniej 0 km.
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 470123517
+
+- # ====== Text Message: KURSY_POPRAWNE_DATY ===================
+  id: 288911443985387113
+  identification: 
+    name: KURSY_POPRAWNE_DATY
+
+  message: 
+    text: Data zakończenia musi być młodsza od daty rozpoczęcia.
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 469889929
+
+- # ====== Text Message: POR_DOC_L_DOST_MIEJSC =================
+  id: 322077182674023715
+  identification: 
+    name: POR_DOC_L_DOST_MIEJSC
+
+  message: 
+    text: Port powinien móc pomieścić co najmniej 0 jednostek transportowych.
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 470135674
+
+- # ====== Text Message: POR_DOC_CZAS_OBSLUGI ==================
+  id: 322078049165024888
+  identification: 
+    name: POR_DOC_CZAS_OBSLUGI
+
+  message: 
+    text: Prędkość obsługi kursu powinna wynosić co najmniej 0 ton na godzinę.
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 470138049
+
+- # ====== Text Message: POR_DOC_ODLEGLOSC =====================
+  id: 322079471634027508
+  identification: 
+    name: POR_DOC_ODLEGLOSC
+
+  message: 
+    text: Długość kursu powinna wynosić co najmniej 0 km.
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 470135322
+
+- # ====== Text Message: KON_WAGA ==============================
+  id: 322191322906096837
+  identification: 
+    name: KON_WAGA
+
+  message: 
+    text: Kontener powinien ważyć co najmniej 0 ton.
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 470159525
+
+- # ====== Text Message: RAF_CENA ==============================
+  id: 322308239854166310
+  identification: 
+    name: RAF_CENA
+
+  message: 
+    text: Cena za litr paliwa nie może być ujemna.
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 470205334
+
+- # ====== Text Message: MAG_PAL_ILOSC =========================
+  id: 322315028204167878
+  identification: 
+    name: MAG_PAL_ILOSC
+
+  message: 
+    text: W magazynie paliwa można przechowywać tylko dodatnie ilości paliwa.
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 470204861
+
+- # ====== Text Message: MAG_PAL_BUDZET ========================
+  id: 322316393566168311
+  identification: 
+    name: MAG_PAL_BUDZET
+
+  message: 
+    text: Budżet na paliwo nie może wejść na debet.
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 470204175
+
+- # ====== Text Message: ZAK_ILOSC =============================
+  id: 322318488166170699
+  identification: 
+    name: ZAK_ILOSC
+
+  message: 
+    text: Nie można kupić ujemnej ilości paliwa.
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 470205622
+
+- # ====== Text Message: PK_MAGAZYN_PALIWA =====================
+  id: 355654226381778157
+  identification: 
+    name: PK_MAGAZYN_PALIWA
+
+  message: 
+    text: 'DEVELOPER TODO: Provide better message in APEX Shared Components Text Messages for PK_MAGAZYN_PALIWA'
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 473576263
+
+- # ====== Text Message: FK_TYP_PALIWA_MAG_ZAK =================
+  id: 355654655174780251
+  identification: 
+    name: FK_TYP_PALIWA_MAG_ZAK
+
+  message: 
+    text: 'DEVELOPER TODO: Provide better message in APEX Shared Components Text Messages for FK_TYP_PALIWA_MAG_ZAK'
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 473576619
+
+- # ====== Text Message: FK_TYP_PALIWA_RAF =====================
+  id: 355655385907781996
+  identification: 
+    name: FK_TYP_PALIWA_RAF
+
+  message: 
+    text: 'DEVELOPER TODO: Provide better message in APEX Shared Components Text Messages for FK_TYP_PALIWA_RAF'
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 473577485
+

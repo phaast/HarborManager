@@ -1,0 +1,1797 @@
+---
+# ====== Page: Zlecanie kursu ================================
+id: 29
+identification: 
+  name: Zlecanie kursu
+  alias: KURSY
+  title: Zleć kurs
+
+appearance: 
+  page-mode: Modal Dialog
+  dialog-template: Drawer
+  template-options: 
+  - '#DEFAULT#'
+  - js-dialog-class-t-Drawer--pullOutEnd
+
+dialog: 
+  chained: false
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+css: 
+  inline: |
+    .form-details {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 0 0;
+        justify-content: flex-start;
+    }
+    
+    .form-detail-box {
+        flex: none;
+        padding: 0;
+        border: none;
+        background-color: transparent;
+    }
+    
+    .form-detail-box p {
+        margin: 0;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Kursy =======================================
+  id: 105121138598526610
+  identification: 
+    name: Kursy
+    type: Form
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: KURSY
+    include-rowid-column: false
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    edit: 
+      enabled: true
+      allowed-operations: 
+      - Add Row
+      - Update Row
+      - Delete Row
+      lost-update-type: Row Values
+
+- # ====== Region: Buttons =====================================
+  id: 105128509342526619
+  identification: 
+    name: Buttons
+    type: Static Content
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: REGION_POSITION_03
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Buttons Container
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: Text (escape special characters)
+      show-line-breaks: true
+
+- # ====== Region: DetailsStatek ===============================
+  id: 205620900929214641
+  identification: 
+    name: DetailsStatek
+    type: Dynamic Content
+
+  source: 
+    language: PL/SQL
+    pl/sql-function-body-returning-a-clob: |
+      DECLARE
+          v_html CLOB;
+          v_max_dystans_km   STATKI.MAX_DYSTANS_KM%TYPE;
+          v_max_l_pasażerow  STATKI.MAX_L_PASAZEROW%TYPE;
+          v_wypornosc_tona    STATKI.WYPORNOSC_TONA%TYPE;
+          v_spalanie_paliwa_l STATKI.SPALANIE_PALIWA_L%TYPE;
+          v_typ_paliwa        STATKI.TYP_PALIWA%TYPE;
+      BEGIN
+          BEGIN
+              SELECT MAX_DYSTANS_KM, MAX_L_PASAZEROW, WYPORNOSC_TONA, SPALANIE_PALIWA_L, TYP_PALIWA
+              INTO v_max_dystans_km, v_max_l_pasażerow, v_wypornosc_tona, v_spalanie_paliwa_l, v_typ_paliwa
+              FROM STATKI
+              WHERE NUMER_SERYJNY = :P29_NR_SER_STATKU;
+          EXCEPTION
+              WHEN NO_DATA_FOUND THEN
+                  v_html := '<p>Nie wybrano statku.</p>';
+                  RETURN v_html;
+          END;
+      
+          v_html := 
+              '<div class="form-details">' ||
+              '  <div class="form-detail-box">' ||
+              '    <p><strong>Maks. liczba pasażerów:</strong> ' || v_max_l_pasażerow || '</p>' ||
+              '    <p><strong>Wyporność [T]:</strong> ' || v_wypornosc_tona || '</p>' ||
+              '    <p><strong>Maks. zasięg [km]:</strong> ' || v_max_dystans_km || '</p>' ||
+              '    <p><strong>Typ paliwa:</strong> ' || v_typ_paliwa || '</p>' ||
+              '    <p><strong>Spalanie paliwa [L/km]:</strong> ' || v_spalanie_paliwa_l || '</p>' ||
+              '  </div>' ||
+              '</div>';
+      
+          RETURN v_html;
+      END;
+    page-items-to-submit: 
+    - P29_NR_SER_STATKU
+
+  layout: 
+    sequence: 60
+    parent-region: Kursy # 105121138598526610
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--removeHeader js-removeLandmark
+    - t-Region--scrollBody
+    - margin-top-none
+    - margin-bottom-none
+    - margin-left-none
+    - margin-right-none
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    performance: 
+      lazy-loading: false
+
+- # ====== Region: DetailsPortDocelowy =========================
+  id: 205621020027214642
+  identification: 
+    name: DetailsPortDocelowy
+    type: Dynamic Content
+
+  source: 
+    language: PL/SQL
+    pl/sql-function-body-returning-a-clob: |
+      DECLARE
+          v_html CLOB;
+      BEGIN
+          BEGIN
+              v_html := get_port_details(:P29_ID_PORTU_DOCELOWEGO);
+          EXCEPTION
+              WHEN NO_DATA_FOUND THEN
+                  v_html := '<p>Nie wybrano portu.</p>';
+                  RETURN v_html;
+          END;
+          RETURN v_html;
+      END;
+    page-items-to-submit: 
+    - P29_ID_PORTU_DOCELOWEGO
+
+  layout: 
+    sequence: 90
+    parent-region: Kursy # 105121138598526610
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--removeHeader js-removeLandmark
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    performance: 
+      lazy-loading: false
+
+- # ====== Region: DetailsZaladunek ============================
+  id: 205621189112214643
+  identification: 
+    name: DetailsZaladunek
+    type: Dynamic Content
+
+  source: 
+    language: PL/SQL
+    pl/sql-function-body-returning-a-clob: |
+      DECLARE
+          v_html CLOB;
+          v_nazwa_robocza   LISTY_ZALADUNKOWE.NAZWA_ROBOCZA%TYPE;
+          v_l_pasazerow     NUMBER;
+          v_suma_wag        NUMBER;
+      BEGIN
+          BEGIN
+              SELECT coalesce(NAZWA_ROBOCZA, 'brak'), count(*)
+              INTO v_nazwa_robocza, v_l_pasazerow
+              FROM PASAZEROWIE LEFT JOIN LISTY_ZALADUNKOWE 
+              ON PASAZEROWIE.ID_ZALADUNKU = LISTY_ZALADUNKOWE.ID_ZALADUNKU 
+              WHERE PASAZEROWIE.ID_ZALADUNKU = :P29_ID_ZALADUNKU GROUP BY NAZWA_ROBOCZA;
+      
+              SELECT SUM(WAGA_TONY)
+              INTO v_suma_wag
+              FROM KONTENERY LEFT JOIN LISTY_ZALADUNKOWE
+              ON KONTENERY.ID_ZALADUNKU = LISTY_ZALADUNKOWE.ID_ZALADUNKU
+              WHERE KONTENERY.ID_ZALADUNKU = :P29_ID_ZALADUNKU;
+          EXCEPTION
+              WHEN NO_DATA_FOUND THEN
+                  v_html := '<p>Nie wybrano listy przewozowej.</p>';
+                  RETURN v_html;
+          END;
+      
+          v_html := 
+              '<div class="form-details">' ||
+              '  <div class="form-detail-box">' ||
+              '    <p><strong>Nazwa robocza:</strong> ' || v_nazwa_robocza || '</p>' ||
+              '    <p><strong>Liczba pasażerów:</strong> ' || v_l_pasazerow || '</p>' ||
+              '    <p><strong>CIężar załadunku:</strong> ' || v_suma_wag || '</p>' ||
+              '  </div>' ||
+              '</div>';
+      
+          RETURN v_html;
+      END;
+    page-items-to-submit: 
+    - P29_ID_ZALADUNKU
+
+  layout: 
+    sequence: 120
+    parent-region: Kursy # 105121138598526610
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--removeHeader js-removeLandmark
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    performance: 
+      lazy-loading: false
+
+- # ====== Region: DetailsZaloga ===============================
+  id: 205621240114214644
+  identification: 
+    name: DetailsZaloga
+    type: Dynamic Content
+
+  source: 
+    language: PL/SQL
+    pl/sql-function-body-returning-a-clob: |
+      DECLARE
+          v_html CLOB;
+          v_czy_kapitan     VARCHAR2(3);
+          v_l_pracownikow   NUMBER;
+      BEGIN
+          BEGIN
+              SELECT count(*)
+              INTO v_l_pracownikow
+              FROM PRACOWNICY_ZALOGI_ROLE
+              WHERE NR_ZALOGI = :P29_NR_ZALOGI;
+      
+              SELECT CASE WHEN COUNT(ID_ROLI)>0 THEN 'Tak' ELSE 'Nie' END
+              INTO v_czy_kapitan
+              FROM PRACOWNICY_ZALOGI_ROLE
+              WHERE NR_ZALOGI = :P29_NR_ZALOGI AND ID_ROLI = 1;
+      
+              IF v_czy_kapitan = 'Nie' THEN
+                  v_html := '<p>Nie wybrano załogi.</p>';
+                  RETURN v_html;
+              END IF;
+          EXCEPTION
+              WHEN NO_DATA_FOUND THEN
+                  v_html := '<p>Nie wybrano załogi.</p>';
+                  RETURN v_html;
+          END;
+      
+          v_html := 
+              '<div class="form-details">' ||
+              '  <div class="form-detail-box">' ||
+              '    <p><strong>Załoga ma kapitana:</strong> ' || v_czy_kapitan || '</p>' ||
+              '    <p><strong>Liczba pracowników w załodze:</strong> ' || v_l_pracownikow || '</p>' ||
+              '  </div>' ||
+              '</div>';
+      
+          RETURN v_html;
+      END;
+    page-items-to-submit: 
+    - P29_NR_ZALOGI
+
+  layout: 
+    sequence: 150
+    parent-region: Kursy # 105121138598526610
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--removeHeader js-removeLandmark
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    performance: 
+      lazy-loading: false
+
+- # ====== Region: Warunki =====================================
+  id: 260714874353768418
+  identification: 
+    name: Warunki
+    type: Dynamic Content
+
+  source: 
+    language: PL/SQL
+    pl/sql-function-body-returning-a-clob: |
+      DECLARE
+          v_html CLOB;
+          vCzyPortMaMiejsce VARCHAR2(3);
+          vCzyZalogaMaKapitana VARCHAR2(3);
+          vCzyZalogaIPasazerowieSieZmieszcza VARCHAR2(3);
+          vCzyCzlonkowieZalogiWolni VARCHAR2(3);
+          vCzyZalogaWolna VARCHAR2(3);
+          vCzyStatekWolny VARCHAR2(3);
+          vCzyWagaSpelniaWypornosc VARCHAR2(3); 
+          vCzyStarczyPaliwa VARCHAR2(3); 
+          vCzyStatekDoplynie VARCHAR2(3);
+      BEGIN
+          BEGIN
+              vCzyPortMaMiejsce := CASE WHEN CzyPortMaMiejsce(:P29_ID_PORTU_DOCELOWEGO) THEN 'TAK' ELSE 'NIE' END;
+              vCzyStatekDoplynie := CASE WHEN CzyStatekDoplynie(:P29_NR_SER_STATKU, :P29_ID_PORTU_DOCELOWEGO) THEN 'TAK' ELSE 'NIE' END;
+              vCzyZalogaMaKapitana := CASE WHEN CzyZalogaMaKapitana(:P29_NR_ZALOGI) THEN 'TAK' ELSE 'NIE' END;
+              vCzyZalogaIPasazerowieSieZmieszcza := CASE WHEN CzyZalogaIPasazerowieSieZmiesci(:P29_NR_ZALOGI, :P29_NR_SER_STATKU, :P29_ID_ZALADUNKU) THEN 'TAK' ELSE 'NIE' END;
+              vCzyCzlonkowieZalogiWolni := CASE WHEN CzyCzlonkowieZalogiWolni(:P29_NR_ZALOGI, :P29_DATA_ROZPOCZECIA) THEN 'TAK' ELSE 'NIE' END;
+              vCzyZalogaWolna := CASE WHEN CzyZalogaWolna_og(:P29_NR_ZALOGI) THEN 'TAK' ELSE 'NIE' END;
+              vCzyStatekWolny := CASE WHEN CzyStatekWolny_og(:P29_NR_SER_STATKU) THEN 'TAK' ELSE 'NIE' END;
+              vCzyWagaSpelniaWypornosc := CASE WHEN CzyWagaSpelniaWypornosc(:P29_ID_ZALADUNKU, :P29_NR_ZALOGI, :P29_NR_SER_STATKU) THEN 'TAK' ELSE 'NIE' END;
+              vCzyStarczyPaliwa := CASE WHEN CzyStarczyPaliwaShortened(:P29_NR_SER_STATKU, :P29_ID_PORTU_DOCELOWEGO) THEN 'TAK' ELSE 'NIE' END;
+      
+          EXCEPTION
+              WHEN NO_DATA_FOUND THEN
+                  v_html := '<p>Brak podsumowania. Najpierw uzupełnij dane.</p>';
+                  RETURN v_html;
+          END;
+      
+          -- Tworzenie HTML z wynikami
+          v_html := 
+              '<div class="form-details">' ||
+              '  <div class="form-detail-box">' ||
+              '    <p><strong>Czy port ma wolne miejsce:</strong> ' || vCzyPortMaMiejsce || '</p>' ||
+              '    <p><strong>Czy załoga ma swojego kapitana:</strong> ' || vCzyZalogaMaKapitana || '</p>' ||
+              '    <p><strong>Czy załoga i pasażerowie się zmieszczą na jednostce:</strong> ' || vCzyZalogaIPasazerowieSieZmieszcza || '</p>' ||
+              '  </div>' ||
+              '  <div class="form-detail-box">' ||
+              '    <p><strong>Czy członkowie załogi są dostępni:</strong> ' || vCzyCzlonkowieZalogiWolni || '</p>' ||
+              '    <p><strong>Czy załoga jest dostępna:</strong> ' || vCzyZalogaWolna || '</p>' ||
+              '    <p><strong>Czy jednostka transportowa jest dostępna:</strong> ' || vCzyStatekWolny || '</p>' ||
+              '  </div>' ||
+              '  <div class="form-detail-box">' ||
+              '    <p><strong>Czy waga spełnia wyporność:</strong> ' || vCzyWagaSpelniaWypornosc || '</p>' ||
+              '    <p><strong>Czy mamy budżet na paliwo:</strong> ' || vCzyStarczyPaliwa || '</p>' ||
+              '    <p><strong>Czy statek dopłynie:</strong> ' || vCzyStatekDoplynie || '</p>' ||
+              '  </div>' ||
+              '</div>';
+      
+          RETURN v_html;
+      END;
+    page-items-to-submit: 
+    - P29_NR_SER_STATKU
+    - P29_ID_PORTU_DOCELOWEGO
+    - P29_ID_ZALADUNKU
+    - P29_NR_ZALOGI
+
+  layout: 
+    sequence: 180
+    parent-region: Kursy # 105121138598526610
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--removeHeader js-removeLandmark
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    performance: 
+      lazy-loading: false
+
+page-items: 
+- # ====== Page Item: P29_NR_KURSU =============================
+  id: 105121570041526611
+  identification: 
+    name: P29_NR_KURSU
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 20
+    region: Kursy # 105121138598526610
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Kursy # 105121138598526610
+    column: NR_KURSU
+    data-type: NUMBER
+    query-only: false
+    primary-key: true
+
+  default: 
+    type: Sequence
+    sequence: KURSY_SEQ
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P29_DATA_ROZPOCZECIA =====================
+  id: 105121944192526611
+  identification: 
+    name: P29_DATA_ROZPOCZECIA
+    type: Date Picker
+
+  label: 
+    label: Data zlecenia
+    alignment: Left
+
+  settings: 
+    show-time: true
+    display-as: Popup
+    minimum-date: None
+    maximum-date: None
+    multiple-months: No
+    use-defaults: true
+
+  layout: 
+    sequence: 40
+    region: Kursy # 105121138598526610
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    format-mask: 'DD-MM-YYYY HH24:MI:SS'
+    width: 32
+
+  validation: 
+    value-required: true
+    maximum-length: 255
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Kursy # 105121138598526610
+    column: DATA_ROZPOCZECIA
+    data-type: TIMESTAMP
+    query-only: false
+    primary-key: false
+
+  default: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: SYSTIMESTAMP
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P29_DATA_ZAKONCZENIA =====================
+  id: 105122726141526612
+  identification: 
+    name: P29_DATA_ZAKONCZENIA
+    type: Date Picker
+
+  label: 
+    label: Data zakończenia
+    alignment: Left
+
+  settings: 
+    show-time: true
+    display-as: Popup
+    minimum-date: None
+    maximum-date: None
+    multiple-months: No
+    use-defaults: true
+
+  layout: 
+    sequence: 170
+    region: Kursy # 105121138598526610
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    format-mask: 'DD-MM-YYYY HH24:MI:SS'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Kursy # 105121138598526610
+    column: DATA_ZAKONCZENIA
+    data-type: TIMESTAMP
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P29_STATUS_ZAKONCZENIA ===================
+  id: 105123557389526613
+  identification: 
+    name: P29_STATUS_ZAKONCZENIA
+    type: Checkbox
+
+  label: 
+    label: Zlecenie ukończone
+    alignment: Left
+
+  settings: 
+    use-defaults: false
+    checked-value: 1
+    unchecked-value: 0
+
+  layout: 
+    sequence: 30
+    region: Kursy # 105121138598526610
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Kursy # 105121138598526610
+    column: STATUS_ZAKONCZENIA
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  default: 
+    type: Static
+    static-value: 0
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P29_NR_KURSU
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P29_NR_SER_STATKU ========================
+  id: 105123964433526613
+  identification: 
+    name: P29_NR_SER_STATKU
+    type: Select List
+
+  label: 
+    label: Jednostka transportowa
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 50
+    region: Kursy # 105121138598526610
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: STATKI.NAZWA # 105124056199526613
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Kursy # 105121138598526610
+    column: NR_SER_STATKU
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P29_ID_PORTU_DOCELOWEGO ==================
+  id: 105124647889526614
+  identification: 
+    name: P29_ID_PORTU_DOCELOWEGO
+    type: Select List
+
+  label: 
+    label: Port docelowy
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 80
+    region: Kursy # 105121138598526610
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: PORTY_DOCELOWE.NAZWA # 105124772643526614
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Kursy # 105121138598526610
+    column: ID_PORTU_DOCELOWEGO
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P29_NR_ZALOGI ============================
+  id: 105125380409526615
+  identification: 
+    name: P29_NR_ZALOGI
+    type: Select List
+
+  label: 
+    label: Załoga
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 140
+    region: Kursy # 105121138598526610
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: ZALOGI.NAZWA # 105108799487526557
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Kursy # 105121138598526610
+    column: NR_ZALOGI
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P29_ID_ZALADUNKU =========================
+  id: 105125733693526615
+  identification: 
+    name: P29_ID_ZALADUNKU
+    type: Select List
+
+  label: 
+    label: Lista przewozowa
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 110
+    region: Kursy # 105121138598526610
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: SELECT ID_ZALADUNKU d, ID_ZALADUNKU r FROM LISTY_ZALADUNKOWE WHERE CZY_UZYTA = 'NIE'
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Kursy # 105121138598526610
+    column: ID_ZALADUNKU
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: CHECK_DETAILS ============================
+  id: 205621594360214647
+  identification: 
+    name: CHECK_DETAILS
+    type: Checkbox
+
+  label: 
+    label: Pokaż szczegóły
+    alignment: Left
+
+  settings: 
+    use-defaults: false
+    checked-value: 1
+    unchecked-value: 0
+
+  layout: 
+    sequence: 10
+    region: Kursy # 105121138598526610
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: 1
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: CANCEL ======================================
+  id: 105128974922526619
+  identification: 
+    button-name: CANCEL
+    label: Anuluj
+
+  layout: 
+    sequence: 10
+    region: Buttons # 105128509342526619
+    slot: CLOSE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: DELETE ======================================
+  id: 105130354061526620
+  identification: 
+    button-name: DELETE
+    label: Usuń
+
+  layout: 
+    sequence: 20
+    region: Buttons # 105128509342526619
+    slot: DELETE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--danger
+    - t-Button--simple
+
+  behavior: 
+    action: Submit Page
+    execute-validations: false
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL DELETE action
+
+  confirmation: 
+    message: '&APP_TEXT$DELETE_MSG!RAW.'
+    style: Danger
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P29_NR_KURSU
+
+- # ====== Button: SAVE ========================================
+  id: 105130743128526621
+  identification: 
+    button-name: SAVE
+    label: Zatwierdź zmiany
+
+  layout: 
+    sequence: 30
+    region: Buttons # 105128509342526619
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL UPDATE action
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P29_NR_KURSU
+
+- # ====== Button: CREATE ======================================
+  id: 105131118176526621
+  identification: 
+    button-name: CREATE
+    label: Zleć
+
+  layout: 
+    sequence: 40
+    region: Buttons # 105128509342526619
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL INSERT action
+
+  server-side-condition: 
+    type: Item is NULL
+    item: P29_NR_KURSU
+
+dynamic-actions: 
+- # ====== Dynamic Action: Cancel Dialog =======================
+  id: 105129024337526619
+  identification: 
+    name: Cancel Dialog
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: CANCEL # 105128974922526619
+
+  actions: 
+  - # ====== Action: Cancel Dialog ===============================
+    id: 105129870094526620
+    identification: 
+      action: Cancel Dialog
+
+    execution: 
+      sequence: 10
+      event: Cancel Dialog # 105129024337526619
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: CHANGESTATEK ========================
+  id: 205621373249214645
+  identification: 
+    name: CHANGESTATEK
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P29_NR_SER_STATKU
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 205621477315214646
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: DetailsStatek # 205620900929214641
+
+    execution: 
+      sequence: 10
+      event: CHANGESTATEK # 205621373249214645
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 260715456446768424
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Warunki # 260714874353768418
+
+    execution: 
+      sequence: 20
+      event: CHANGESTATEK # 205621373249214645
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: change ==============================
+  id: 260713255686768402
+  identification: 
+    name: change
+
+  execution: 
+    sequence: 30
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - CHECK_DETAILS
+
+  client-side-condition: 
+    type: Item = Value
+    item: CHECK_DETAILS
+    value: 1
+
+  actions: 
+  - # ====== Action: Show ========================================
+    id: 260713389048768403
+    identification: 
+      action: Show
+
+    affected-elements: 
+      selection-type: Region
+      region: DetailsStatek # 205620900929214641
+
+    execution: 
+      sequence: 10
+      event: change # 260713255686768402
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+  - # ====== Action: Hide ========================================
+    id: 260713559661768405
+    identification: 
+      action: Hide
+
+    affected-elements: 
+      selection-type: Region
+      region: DetailsStatek # 205620900929214641
+
+    execution: 
+      sequence: 10
+      event: change # 260713255686768402
+      fire-when-event-result-is: False
+      fire-on-initialization: true
+
+  - # ====== Action: Show ========================================
+    id: 260713638963768406
+    identification: 
+      action: Show
+
+    affected-elements: 
+      selection-type: Region
+      region: DetailsPortDocelowy # 205621020027214642
+
+    execution: 
+      sequence: 20
+      event: change # 260713255686768402
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+  - # ====== Action: Show ========================================
+    id: 260713705507768407
+    identification: 
+      action: Show
+
+    affected-elements: 
+      selection-type: Region
+      region: DetailsZaladunek # 205621189112214643
+
+    execution: 
+      sequence: 30
+      event: change # 260713255686768402
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+  - # ====== Action: Show ========================================
+    id: 260713827713768408
+    identification: 
+      action: Show
+
+    affected-elements: 
+      selection-type: Region
+      region: DetailsZaloga # 205621240114214644
+
+    execution: 
+      sequence: 40
+      event: change # 260713255686768402
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+  - # ====== Action: Hide ========================================
+    id: 260713959997768409
+    identification: 
+      action: Hide
+
+    affected-elements: 
+      selection-type: Region
+      region: DetailsPortDocelowy # 205621020027214642
+
+    execution: 
+      sequence: 20
+      event: change # 260713255686768402
+      fire-when-event-result-is: False
+      fire-on-initialization: true
+
+  - # ====== Action: Hide ========================================
+    id: 260714099009768410
+    identification: 
+      action: Hide
+
+    affected-elements: 
+      selection-type: Region
+      region: DetailsZaladunek # 205621189112214643
+
+    execution: 
+      sequence: 30
+      event: change # 260713255686768402
+      fire-when-event-result-is: False
+      fire-on-initialization: true
+
+  - # ====== Action: Hide ========================================
+    id: 260714168348768411
+    identification: 
+      action: Hide
+
+    affected-elements: 
+      selection-type: Region
+      region: DetailsZaloga # 205621240114214644
+
+    execution: 
+      sequence: 40
+      event: change # 260713255686768402
+      fire-when-event-result-is: False
+      fire-on-initialization: true
+
+  - # ====== Action: Show ========================================
+    id: 260714996848768419
+    identification: 
+      action: Show
+
+    affected-elements: 
+      selection-type: Region
+      region: Warunki # 260714874353768418
+
+    execution: 
+      sequence: 50
+      event: change # 260713255686768402
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+  - # ====== Action: Hide ========================================
+    id: 260715025209768420
+    identification: 
+      action: Hide
+
+    affected-elements: 
+      selection-type: Region
+      region: Warunki # 260714874353768418
+
+    execution: 
+      sequence: 50
+      event: change # 260713255686768402
+      fire-when-event-result-is: False
+      fire-on-initialization: true
+
+- # ====== Dynamic Action: CHANGEPORT ==========================
+  id: 260714268921768412
+  identification: 
+    name: CHANGEPORT
+
+  execution: 
+    sequence: 40
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P29_ID_PORTU_DOCELOWEGO
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 260714398444768413
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: DetailsPortDocelowy # 205621020027214642
+
+    execution: 
+      sequence: 10
+      event: CHANGEPORT # 260714268921768412
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 260715383538768423
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Warunki # 260714874353768418
+
+    execution: 
+      sequence: 20
+      event: CHANGEPORT # 260714268921768412
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: CHANGEZALADUNEK =====================
+  id: 260714498670768414
+  identification: 
+    name: CHANGEZALADUNEK
+
+  execution: 
+    sequence: 50
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P29_ID_ZALADUNKU
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 260714564730768415
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: DetailsZaladunek # 205621189112214643
+
+    execution: 
+      sequence: 10
+      event: CHANGEZALADUNEK # 260714498670768414
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 260715289603768422
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Warunki # 260714874353768418
+
+    execution: 
+      sequence: 20
+      event: CHANGEZALADUNEK # 260714498670768414
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: CHANGEZALOGI ========================
+  id: 260714692510768416
+  identification: 
+    name: CHANGEZALOGI
+
+  execution: 
+    sequence: 60
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P29_NR_ZALOGI
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 260714798317768417
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: DetailsZaloga # 205621240114214644
+
+    execution: 
+      sequence: 10
+      event: CHANGEZALOGI # 260714692510768416
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 260715171407768421
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Warunki # 260714874353768418
+
+    execution: 
+      sequence: 20
+      event: CHANGEZALOGI # 260714692510768416
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: CHANGEDATAZAKONCZNENIA ==============
+  id: 260715799677768427
+  identification: 
+    name: CHANGEDATAZAKONCZNENIA
+
+  execution: 
+    sequence: 70
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P29_ID_ZALADUNKU
+    - P29_ID_PORTU_DOCELOWEGO
+    - P29_DATA_ROZPOCZECIA
+
+  client-side-condition: 
+    type: JavaScript expression
+    javascript-expression: |
+      (apex.item('P29_DATA_ROZPOCZECIA').getValue() != '') &&
+      (apex.item('P29_ID_PORTU_DOCELOWEGO').getValue() != '') &&
+      (apex.item('P29_ID_ZALADUNKU').getValue() != '')
+
+  actions: 
+  - # ====== Action: Oblicz datę zakończenia =====================
+    id: 260715556966768425
+    identification: 
+      name: Oblicz datę zakończenia
+      action: Set Value
+
+    settings: 
+      set-type: PL/SQL Function Body
+      pl/sql-function-body: |
+        DECLARE
+            v_predkosc_obslugi NUMBER;      
+            v_waga_zaladunku NUMBER;          
+            v_czas_obslugi INTERVAL DAY TO SECOND; 
+            v_data_zakonczenia TIMESTAMP;    
+        BEGIN
+            SELECT CZAS_OBSLUGI_NA_TONE_H
+            INTO v_predkosc_obslugi
+            FROM PORTY_DOCELOWE
+            WHERE ID_PORTU = :P29_ID_PORTU_DOCELOWEGO;
+        
+            SELECT SUM(WAGA_TONY)
+            INTO v_waga_zaladunku
+            FROM KONTENERY K
+            LEFT JOIN LISTY_ZALADUNKOWE L 
+            ON L.ID_ZALADUNKU = K.ID_ZALADUNKU 
+            WHERE K.ID_ZALADUNKU = :P29_ID_ZALADUNKU;
+        
+            v_czas_obslugi := NUMTODSINTERVAL(v_waga_zaladunku / v_predkosc_obslugi, 'HOUR');
+        
+            v_data_zakonczenia := TO_TIMESTAMP(:P29_DATA_ROZPOCZECIA, 'DD-MM-YYYY HH24:MI:SS') + v_czas_obslugi;
+            
+            RETURN TO_CHAR(v_data_zakonczenia, 'DD-MM-YYYY HH24:MI:SS');
+        END;
+      items-to-submit: 
+      - P29_ID_PORTU_DOCELOWEGO
+      - P29_DATA_ROZPOCZECIA
+      - P29_ID_ZALADUNKU
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P29_DATA_ZAKONCZENIA
+
+    execution: 
+      sequence: 10
+      event: CHANGEDATAZAKONCZNENIA # 260715799677768427
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+validations: 
+- # ====== Validation: P29_DATA_ROZPOCZECIA must be timestamp ==
+  id: 105122428731526612
+  identification: 
+    name: P29_DATA_ROZPOCZECIA must be timestamp
+
+  execution: 
+    sequence: 10
+
+  validation: 
+    type: Item is a valid timestamp
+    item: P29_DATA_ROZPOCZECIA
+    always-execute: false
+
+  error: 
+    error-message: '#LABEL# must be a valid timestamp.'
+    display-location: Inline with Field and in Notification
+    associated-item: P29_DATA_ROZPOCZECIA # 105121944192526611
+
+- # ====== Validation: P29_DATA_ZAKONCZENIA must be timestamp ==
+  id: 105123216269526613
+  identification: 
+    name: P29_DATA_ZAKONCZENIA must be timestamp
+
+  execution: 
+    sequence: 20
+
+  validation: 
+    type: Item is a valid timestamp
+    item: P29_DATA_ZAKONCZENIA
+    always-execute: false
+
+  error: 
+    error-message: '#LABEL# must be a valid timestamp.'
+    display-location: Inline with Field and in Notification
+    associated-item: P29_DATA_ZAKONCZENIA # 105122726141526612
+
+processes: 
+- # ====== Process: Initialize form Kursy ======================
+  id: 105131547645526621
+  identification: 
+    name: Initialize form Kursy
+    type: Form - Initialization
+    execution-chain: None
+    form-region: Kursy # 105121138598526610
+
+  execution: 
+    sequence: 10
+    point: Before Header
+    run-process: Once Per Page Visit (default)
+
+- # ====== Process: Process form Kursy =========================
+  id: 105131918712526622
+  identification: 
+    name: Process form Kursy
+    type: Form - Automatic Row Processing (DML)
+    execution-chain: None
+    form-region: Kursy # 105121138598526610
+
+  settings: 
+    target-type: Region Source
+    prevent-lost-updates: true
+    lock-row: Yes
+    return-primary-key(s)-after-insert: true
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+- # ====== Process: Close Dialog ===============================
+  id: 105132348712526622
+  identification: 
+    name: Close Dialog
+    type: Close Dialog
+    execution-chain: None
+
+  settings: 
+    show-success-messages: true
+
+  execution: 
+    sequence: 50
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    type: Request is contained in Value
+    value: CREATE,SAVE,DELETE
+

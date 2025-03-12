@@ -1,0 +1,720 @@
+---
+# ====== Page: STAN PALIWA ===================================
+id: 30
+identification: 
+  name: STAN PALIWA
+  alias: PALIWO
+  title: Stan paliwa - HarborManager
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Ceny paliw ==================================
+  id: 105441846662928030
+  identification: 
+    name: Ceny paliw
+    title: 'Aktualne ceny paliw:'
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: RAFINERIA
+    include-rowid-column: false
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 50
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: TYP_PALIWA ==================================
+    id: 105441934049928031
+    identification: 
+      column-name: TYP_PALIWA
+      type: Plain Text
+
+    heading: 
+      heading: Typ Paliwa
+      alignment: start
+
+    layout: 
+      sequence: 10
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CENA_ZL_L ===================================
+    id: 105442024602928032
+    identification: 
+      column-name: CENA_ZL_L
+      type: Plain Text
+
+    heading: 
+      heading: Cena [PLN/L]
+      alignment: end
+
+    layout: 
+      sequence: 20
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Budzety =====================================
+  id: 105442249963928034
+  identification: 
+    name: Budzety
+    title: 'Stan budżetów:'
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: BUDZETY_NA_PALIWO
+    include-rowid-column: false
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: TYP_PALIWA ==================================
+    id: 105442315998928035
+    identification: 
+      column-name: TYP_PALIWA
+      type: Plain Text
+
+    heading: 
+      heading: Typ Paliwa
+      alignment: start
+
+    layout: 
+      sequence: 10
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: BUDZET_ZL ===================================
+    id: 105442432074928036
+    identification: 
+      column-name: BUDZET_ZL
+      type: Plain Text
+
+    heading: 
+      heading: Budżet [PLN]
+      alignment: end
+
+    layout: 
+      sequence: 20
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Breadcrumb ==================================
+  id: 105781658488131672
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 104632925000525429
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  header-and-footer: 
+    footer-text: Przegląd
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: Paliwo Magazyn ==============================
+  id: 105786502817131685
+  identification: 
+    name: Paliwo Magazyn
+    title: 'Paliwo w magazynie:'
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 105786930587131685
+    chart: 
+      type: Bar
+
+    appearance: 
+      orientation: Vertical
+      stack: true
+      stack-label: true
+      font-family: Helvetica
+      font-style: Normal
+      font-color: '#202020'
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: true
+
+    multi-series-chart-data: 
+      fill-gaps-in-chart-data: true
+      sort-order: Label - Ascending
+      render-gap-as-zero: true
+
+    settings: 
+      zoom-and-scroll: No
+
+    animation: 
+      on-display: Automatic
+      on-data-change: Automatic
+
+    tooltip: 
+      show: true
+      show-series-name: true
+      show-group-name: true
+      show-value: true
+
+    legend: 
+      show: false
+
+    series: 
+    - # ====== Series: Ilości rodzajów paliwa ======================
+      id: 105788673040131687
+      identification: 
+        name: Ilości rodzajów paliwa
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: select TYP_PALIWA label, ILOSC_L value from MAGAZYN_PALIWA
+
+      column-mapping: 
+        label: LABEL
+        value: VALUE
+
+      appearance: 
+        color: '#ff9500'
+        assigned-to-y2-axis: false
+
+      label: 
+        show: false
+
+      performance: 
+        maximum-rows-to-process: 20
+
+    axes: 
+    - # ====== Axis: x =============================================
+      id: 105787442675131686
+      identification: 
+        name: x
+        show-axis: true
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      major-ticks: 
+        show: Automatic
+
+      minor-ticks: 
+
+      tick-label: 
+        show: true
+        rotation: true
+        position: Outside
+
+    - # ====== Axis: y =============================================
+      id: 105788066171131686
+      identification: 
+        name: y
+        show-axis: true
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Automatic
+
+      minor-ticks: 
+
+      tick-label: 
+        show: true
+
+buttons: 
+- # ====== Button: MORE ========================================
+  id: 105442519919928037
+  identification: 
+    button-name: MORE
+    label: PRZEJDŹ DO MAGAZYNU
+
+  layout: 
+    sequence: 30
+    region: Paliwo Magazyn # 105786502817131685
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:4:&SESSION.::&DEBUG.:::'
+      page: 4 # Magazyn Paliwa
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: MORE_1 ======================================
+  id: 105442796286928039
+  identification: 
+    button-name: MORE_1
+    label: PRZEJDŹ DO MAGAZYNU
+
+  layout: 
+    sequence: 10
+    region: Budzety # 105442249963928034
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:4:&SESSION.::&DEBUG.:::'
+      page: 4 # Magazyn Paliwa
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: Cennik ======================================
+  id: 105442857332928040
+  identification: 
+    button-name: Cennik
+    label: PRZEJDŹ DO CENNIKA
+
+  layout: 
+    sequence: 10
+    region: Ceny paliw # 105441846662928030
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:2:&SESSION.::&DEBUG.:::'
+      page: 2 # Cennik Paliw
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: ZAKUP =======================================
+  id: 105442935652928041
+  identification: 
+    button-name: ZAKUP
+    label: ZAKUP PALIWO
+
+  layout: 
+    sequence: 10
+    region: Paliwo Magazyn # 105786502817131685
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:7:&SESSION.::&DEBUG.:::'
+      page: 7 # Dokonywanie Zakupu
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: ZAKUP_1 =====================================
+  id: 105443018592928042
+  identification: 
+    button-name: ZAKUP_1
+    label: PRZEJRZYJ HISTORIĘ ZAKUPÓW
+
+  layout: 
+    sequence: 20
+    region: Paliwo Magazyn # 105786502817131685
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:6:&SESSION.::&DEBUG.:::'
+      page: 6 # Zakup Paliwa
+
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: RefreshChart ========================
+  id: 168622852536000803
+  identification: 
+    name: RefreshChart
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Region
+    region: Paliwo Magazyn # 105786502817131685
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 168622913557000804
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Paliwo Magazyn # 105786502817131685
+
+    execution: 
+      sequence: 10
+      event: RefreshChart # 168622852536000803
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+

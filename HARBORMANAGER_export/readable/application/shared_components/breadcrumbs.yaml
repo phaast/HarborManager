@@ -1,0 +1,259 @@
+---
+- # ====== Breadcrumb: Breadcrumb ==============================
+  id: 104632925000525429
+  identification: 
+    name: Breadcrumb
+
+  entries: 
+  - # ====== Entry: Cennik paliw =================================
+    id: 104953373438525891
+    identification: 
+      name: Cennik paliw
+      page-number: 2
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:2:&SESSION.::&DEBUG.:::'
+        page: 2 # Cennik Paliw
+
+  - # ====== Entry: Magazyn paliwa ===============================
+    id: 104965480902525948
+    identification: 
+      name: Magazyn paliwa
+      page-number: 4
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:4:&SESSION.::&DEBUG.:::'
+        page: 4 # Magazyn Paliwa
+
+  - # ====== Entry: Zakupy =======================================
+    id: 104981345123526005
+    identification: 
+      name: Zakupy
+      page-number: 6
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:6:&APP_SESSION.::&DEBUG.:::'
+        page: 6 # Zakup Paliwa
+
+  - # ====== Entry: Jednostki pływające ==========================
+    id: 104997803532526062
+    identification: 
+      name: Jednostki pływające
+      page-number: 8
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:8:&SESSION.::&DEBUG.:::'
+        page: 8 # Jednostki pływające
+
+  - # ====== Entry: Listy Przewozowe =============================
+    id: 105008733837526114
+    identification: 
+      name: Listy Przewozowe
+      page-number: 10
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:10:&SESSION.::&DEBUG.:::'
+        page: 10 # Listy Przewozowe
+
+  - # ====== Entry: Pasażerowie ==================================
+    id: 105024470342526180
+    identification: 
+      name: Pasażerowie
+      page-number: 12
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:12:&SESSION.::&DEBUG.:::'
+        page: 12 # Lista pasażerów
+
+  - # ====== Entry: Właściciele kontenerów =======================
+    id: 105038622179526234
+    identification: 
+      name: Właściciele kontenerów
+      page-number: 14
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:14:&SESSION.::&DEBUG.:::'
+        page: 14 # Właściciele Kontenerów
+
+  - # ====== Entry: Kontenery ====================================
+    id: 105053181631526290
+    identification: 
+      name: Kontenery
+      page-number: 16
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:16:&APP_SESSION.::&DEBUG.:::'
+        page: 16 # Kontenery
+
+  - # ====== Entry: Porty Docelowe ===============================
+    id: 105067478043526351
+    identification: 
+      name: Porty Docelowe
+      page-number: 18
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:18:&APP_SESSION.::&DEBUG.:::'
+        page: 18 # Porty Docelowe
+
+  - # ====== Entry: Pracownicy ===================================
+    id: 105082756548526408
+    identification: 
+      name: Pracownicy
+      page-number: 20
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:20:&APP_SESSION.::&DEBUG.:::'
+        page: 20 # Lista pracowników
+
+  - # ====== Entry: Lista załóg i Role w załogach ================
+    id: 105094870654526461
+    identification: 
+      name: Lista załóg i Role w załogach
+      page-number: 22
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:22:&SESSION.::&DEBUG.:::'
+        page: 22 # Załogi i Role pracowników
+
+  - # ====== Entry: Role Pracowników =============================
+    id: 105105761020526514
+    identification: 
+      name: Role Pracowników
+      page-number: 24
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:24:&SESSION.::&DEBUG.:::'
+        page: 24 # Role Pracowników
+
+  - # ====== Entry: Kursy ========================================
+    id: 105138786868526630
+    identification: 
+      name: Kursy
+      page-number: 28
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:28:&APP_SESSION.::&DEBUG.:::'
+        page: 28 # Kursy
+
+  - # ====== Entry: Administration ===============================
+    id: 105276469855526879
+    identification: 
+      name: Administration
+      page-number: 10000
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:10000:&APP_SESSION.::&DEBUG.:::'
+        page: 10000 # Administration
+
+  - # ====== Entry: Paliwo =======================================
+    id: 105782198550131673
+    identification: 
+      name: Paliwo
+      page-number: 30
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:30:&SESSION.::&DEBUG.:::'
+        page: 30 # STAN PALIWA
+
+  - # ====== Entry: Kadra ========================================
+    id: 123939068942978795
+    identification: 
+      name: Kadra
+      page-number: 31
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:31:&APP_SESSION.::&DEBUG.:::'
+        page: 31 # Kadra
+
+  - # ====== Entry: Lista przypisań pracowników ==================
+    id: 212697938393840842
+    identification: 
+      name: Lista przypisań pracowników
+      page-number: 26
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:26:&APP_SESSION.::&DEBUG.:::'
+        page: 26 # Lista przypisań pracowników
+
+  - # ====== Entry: Strona główna ================================
+    id: 331610480404862319
+    identification: 
+      name: Strona główna
+      page-number: 1
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:1:&SESSION.::&DEBUG.:::'
+        page: 1 # Main
+

@@ -1,0 +1,675 @@
+---
+# ====== Page: Main ==========================================
+id: 1
+identification: 
+  name: Main
+  alias: MAIN
+  title: Strona główna - HarborManager
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+css: 
+  inline: |
+    .stats-container { display: flex; 
+                        justify-content: space-around; 
+                        gap: 10px; 
+                        align-items: center; 
+                        flex-wrap: wrap; }
+    .stats-box { flex: 1; 
+                    min-width: 200px;
+                    max-width: 300px;  
+                    text-align: center; 
+                    border: 1px solid #ccc; 
+                    border-radius: 8px; 
+                    padding: 10px; 
+                    height: 138px;}
+    .stats-box p:first-child { font-size: 15px; 
+                                margin: 0; }
+    .stats-box p:last-child { font-size: 48px; 
+                                font-weight: 
+                                bold;
+                                padding-top: 25px;}
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: RegionPracownicy ============================
+  id: 260717088713768440
+  identification: 
+    name: RegionPracownicy
+    title: 'Rozkład ról wśród załogantów:'
+    type: Chart
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: PRACOWNICY_ZALOGI_ROLE
+    include-rowid-column: false
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 260717189553768441
+    chart: 
+      type: Pie
+
+    layout: 
+      height: 300
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: true
+
+    settings: 
+      pie-selection-effect: Highlight
+
+    value: 
+      pie-chart-other-threshold: 0
+      format: Decimal
+      decimal-places: 0
+      format-scaling: None
+
+    animation: 
+      on-display: Automatic
+      on-data-change: Automatic
+
+    tooltip: 
+      show: true
+      show-series-name: true
+      show-value: true
+
+    legend: 
+      show: true
+      position: Automatic
+      hide-and-show-behavior: Rescale
+
+    series: 
+    - # ====== Series: New =========================================
+      id: 260717246101768442
+      identification: 
+        name: New
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: 'SELECT P.ID_ROLI r, NAZWA FROM PRACOWNICY_ZALOGI_ROLE P LEFT JOIN ROLE_PRACOWNIKOW R ON P.ID_ROLI=R.ID_ROLI '
+
+      column-mapping: 
+        label: NAZWA
+        value: R
+
+      label: 
+        show: true
+        position: Automatic
+        display-as: Label
+
+- # ====== Region: Lista aktywnych kursów ======================
+  id: 260717603640768446
+  identification: 
+    name: Lista aktywnych kursów
+    type: Dynamic Content
+
+  source: 
+    language: PL/SQL
+    pl/sql-function-body-returning-a-clob: |
+      DECLARE
+          vLiczbaAktywnych NUMBER;
+          v_html CLOB;
+      BEGIN
+          SELECT COUNT(*) INTO vLiczbaAktywnych FROM KURSY
+          WHERE STATUS_ZAKONCZENIA = 0;
+      
+          v_html := 
+                   '<div style="font-size: 18px; font-weight: bold; text-align: center;">' ||
+                   '  Aktualnie trwa <span style="color: #5b7586;">' || vLiczbaAktywnych ||
+                   '</span> kursów.</div>';
+      
+          RETURN v_html;
+      END;
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--removeHeader js-removeLandmark
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    performance: 
+      lazy-loading: false
+
+- # ====== Region: Breadcrumb ==================================
+  id: 331609940582862318
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 104632925000525429
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: Paliwo Magazyn ==============================
+  id: 440504062519170230
+  identification: 
+    name: Paliwo Magazyn
+    title: 'Paliwo w magazynie:'
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 334717895519038548
+    chart: 
+      type: Bar
+
+    appearance: 
+      orientation: Vertical
+      stack: true
+      stack-label: true
+      font-family: Helvetica
+      font-style: Normal
+      font-color: '#202020'
+
+    layout: 
+      height: 300
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: true
+
+    multi-series-chart-data: 
+      fill-gaps-in-chart-data: true
+      sort-order: Label - Ascending
+      render-gap-as-zero: true
+
+    settings: 
+      zoom-and-scroll: No
+
+    animation: 
+      on-display: Automatic
+      on-data-change: Automatic
+
+    tooltip: 
+      show: true
+      show-series-name: true
+      show-group-name: true
+      show-value: true
+
+    legend: 
+      show: false
+
+    series: 
+    - # ====== Series: Ilości rodzajów paliwa ======================
+      id: 334719541452038554
+      identification: 
+        name: Ilości rodzajów paliwa
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: select TYP_PALIWA label, ILOSC_L value from MAGAZYN_PALIWA
+
+      column-mapping: 
+        label: LABEL
+        value: VALUE
+
+      appearance: 
+        color: '#ff9500'
+        assigned-to-y2-axis: false
+
+      label: 
+        show: false
+
+      performance: 
+        maximum-rows-to-process: 20
+
+    axes: 
+    - # ====== Axis: x =============================================
+      id: 334718351195038550
+      identification: 
+        name: x
+        show-axis: true
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      major-ticks: 
+        show: Automatic
+
+      minor-ticks: 
+
+      tick-label: 
+        show: true
+        rotation: true
+        position: Outside
+
+    - # ====== Axis: y =============================================
+      id: 334718926912038552
+      identification: 
+        name: y
+        show-axis: true
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Automatic
+
+      minor-ticks: 
+
+      tick-label: 
+        show: true
+
+- # ====== Region: RegionListyPrzewozowe =======================
+  id: 503405793928076664
+  identification: 
+    name: RegionListyPrzewozowe
+    type: Dynamic Content
+
+  source: 
+    language: PL/SQL
+    pl/sql-function-body-returning-a-clob: |
+      DECLARE
+          v_html CLOB;
+          v_listy_oczekujace NUMBER := 0;
+          v_kontenery_oddelegowane NUMBER := 0;
+          v_pasazerowie_oddelegowani NUMBER := 0;
+          v_listy_zrealizowane NUMBER := 0;
+      BEGIN
+          SELECT COUNT(*) INTO v_listy_oczekujace
+          FROM LISTY_ZALADUNKOWE WHERE CZY_UZYTA = 'NIE';
+      
+          SELECT COUNT(*) INTO v_listy_zrealizowane
+          FROM LISTY_ZALADUNKOWE WHERE CZY_UZYTA = 'TAK';
+      
+          SELECT COUNT(*) INTO v_kontenery_oddelegowane
+          FROM KONTENERY K LEFT JOIN LISTY_ZALADUNKOWE L ON K.ID_ZALADUNKU=L.ID_ZALADUNKU  
+          WHERE K.ID_ZALADUNKU IS NOT NULL AND CZY_UZYTA = 'TAK';
+      
+          SELECT COUNT(*) INTO v_pasazerowie_oddelegowani
+          FROM PASAZEROWIE K LEFT JOIN LISTY_ZALADUNKOWE L ON K.ID_ZALADUNKU=L.ID_ZALADUNKU  
+          WHERE K.ID_ZALADUNKU IS NOT NULL AND CZY_UZYTA = 'TAK';
+      
+          
+           v_html :=
+              '<div class="stats-container">' ||
+              '  <div class="stats-box">' ||
+              '    <p>Nieprzypisane listy</p>' ||
+              '    <p>' || v_listy_oczekujace || '</p>' ||
+              '  </div>' ||
+              '  <div class="stats-box">' ||
+              '    <p>Oddelegowane listy</p>' ||
+              '    <p>' || v_listy_zrealizowane || '</p>' ||
+              '  </div>' ||
+              '  <div class="stats-box">' ||
+              '    <p>Oddelegowano kontenerów</p>' ||
+              '    <p>' || v_kontenery_oddelegowane || '</p>' ||
+              '  </div>' ||
+              '  <div class="stats-box">' ||
+              '    <p>Oddelegowano pasażerów</p>' ||
+              '    <p>' || v_pasazerowie_oddelegowani || '</p>' ||
+              '  </div>' ||
+              '</div>';
+      
+          RETURN v_html;
+      END;
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--removeHeader js-removeLandmark
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    performance: 
+      lazy-loading: false
+
+buttons: 
+- # ====== Button: New =========================================
+  id: 260716288913768432
+  identification: 
+    button-name: New
+    label: PANEL LIST PRZEWOZOWYCH
+
+  layout: 
+    sequence: 10
+    region: RegionListyPrzewozowe # 503405793928076664
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    alignment: Left center
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--stretch
+    - t-Button--gapBottom
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:10:&SESSION.::&DEBUG.:::'
+      page: 10 # Listy Przewozowe
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: more ========================================
+  id: 260717557413768445
+  identification: 
+    button-name: more
+    label: PANEL ZAŁÓG I RÓL
+
+  layout: 
+    sequence: 10
+    region: RegionPracownicy # 260717088713768440
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:22:&SESSION.::&DEBUG.:::'
+      page: 22 # Załogi i Role pracowników
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: morekursy ===================================
+  id: 260717768422768447
+  identification: 
+    button-name: morekursy
+    label: ZOBACZ PANEL KURSÓW
+
+  layout: 
+    sequence: 10
+    region: Lista aktywnych kursów # 260717603640768446
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    alignment: Left center
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--stretch
+    - t-Button--gapBottom
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:28:&SESSION.::&DEBUG.:::'
+      page: 28 # Kursy
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: ZAKUP =======================================
+  id: 334720131387038556
+  identification: 
+    button-name: ZAKUP
+    label: ZAKUP PALIWO
+
+  layout: 
+    sequence: 20
+    region: Paliwo Magazyn # 440504062519170230
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:7:&SESSION.::&DEBUG.:::'
+      page: 7 # Dokonywanie Zakupu
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: MORE ========================================
+  id: 334720943030038556
+  identification: 
+    button-name: MORE
+    label: PANEL PALIWA
+
+  layout: 
+    sequence: 10
+    region: Paliwo Magazyn # 440504062519170230
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:30:&SESSION.::&DEBUG.:::'
+      page: 30 # STAN PALIWA
+
+    warn-on-unsaved-changes: Do Not Check
+

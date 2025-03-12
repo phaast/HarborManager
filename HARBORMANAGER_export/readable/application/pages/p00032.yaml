@@ -1,0 +1,2040 @@
+---
+# ====== Page: Przypisanie do listy ==========================
+id: 32
+identification: 
+  name: Przypisanie do listy
+  alias: PRZYPISANIE-DO-LISTY
+  title: Przypisz ładunek do listy
+
+appearance: 
+  page-mode: Modal Dialog
+  dialog-template: Drawer
+  template-options: 
+  - '#DEFAULT#'
+  - js-dialog-class-t-Drawer--pullOutEnd
+
+dialog: 
+  chained: true
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Przypisanie do listy ========================
+  id: 152818999747707926
+  identification: 
+    name: Przypisanie do listy
+    type: Form
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: LISTY_ZALADUNKOWE
+    include-rowid-column: false
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: przypisanie_id
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    edit: 
+      enabled: true
+      allowed-operations: 
+      - Add Row
+      - Update Row
+      - Delete Row
+      lost-update-type: Row Values
+
+- # ====== Region: Buttons =====================================
+  id: 152822077191707940
+  identification: 
+    name: Buttons
+    type: Static Content
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: REGION_POSITION_03
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Buttons Container
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: Text (escape special characters)
+      show-line-breaks: true
+
+- # ====== Region: Kontenery ===================================
+  id: 164786987443502907
+  identification: 
+    name: Kontenery
+    type: Interactive Grid
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT 
+          CASE WHEN K.ID_ZALADUNKU = :P32_ID_ZALADUNKU THEN 'Y' ELSE 'N' END AS PRZYPISANY,
+          NR_KONTENERA, 
+          KATEGORIA, 
+          WAGA_TONY,
+          ID_WLASCICIELA,
+          K.ID_ZALADUNKU
+      FROM KONTENERY K LEFT JOIN LISTY_ZALADUNKOWE L ON K.ID_ZALADUNKU=L.ID_ZALADUNKU
+      WHERE CZY_UZYTA IS NULL OR CZY_UZYTA = 'NIE'
+    page-items-to-submit: 
+    - P32_ID_ZALADUNKU
+
+  layout: 
+    sequence: 30
+    parent-region: Przypisanie do listy # 152818999747707926
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: kontenery_id
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 164789848275502936
+    edit: 
+      enabled: true
+      lost-update-type: Row Values
+
+    performance: 
+      lazy-loading: false
+
+    appearance: 
+      select-first-row: true
+      fixed-row-height: true
+
+    pagination: 
+      type: Page
+      show-total-count: true
+
+    toolbar: 
+      show: true
+      controls: 
+      - Search Column Selection
+      - Search Field
+      - Actions Menu
+      - Reset Button
+
+    enable-users-to: 
+      save-public-report: false
+      flashback: true
+      define-chart-view: true
+      download: true
+
+    download: 
+      formats: 
+      - CSV
+      - HTML
+      - Excel
+      - PDF
+      send-as-email: true
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    advanced: 
+      initialization-javascript-function: |
+        function(config) {
+            let $ = apex.jQuery,
+                toolbarData = $.apex.interactiveGrid.copyDefaultToolbar(),
+                toolbarGroup = toolbarData.toolbarFind("actions3");
+                toolbarGroup.controls.push({
+                    type: "BUTTON",
+                    id: "custom_ig_save_btn",
+                    label: "Przypisz",
+                    action: "save",
+                    icon: "icon-ig-save",
+                    iconBeforeLabel: true,
+                    hot: true,
+                    action: "custom-ig-save"
+                });
+        
+            config.initActions = function( actions ) {
+                actions.add( {
+                    name: "custom-ig-save",
+                    label: "Custom IG Save",
+                    action: function(event, focusElement) {
+                        var region = apex.region("kontenery_id");
+        
+                        if (!region) {
+                            apex.message.alert("Region z interaktywną tabelą nie został znaleziony. Sprawdź Static ID.");
+                            return;
+                        }
+        
+                        var grid = region.widget().interactiveGrid("getViews", "grid");
+                        var selectedRecords = grid.getSelectedRecords();
+        
+                        if (selectedRecords.length === 0) {
+                            apex.message.alert("Nie zaznaczono żadnych wierszy.");
+                            return;
+                        }
+        
+                        var selectedIds = selectedRecords.map(function(record) {
+                            return record[0];
+                        });
+        
+                        apex.server.process("SAVE_SELECTED", {
+                            x01: selectedIds.join(','),
+                            pageItems: "#P32_ID_ZALADUNKU"
+                        }, {
+                            success: function(data) {
+                                apex.message.showPageSuccess("Zaktualizowano dane.");
+                                apex.region("kontenery_id").refresh();
+                            },
+                            error: function(e) {
+                                apex.message.alert("Wystąpił błąd podczas zapisywania danych: " + e.responseText);
+                            }
+                        });
+                        
+                        apex.server.process("UPDATE_SUMMARY", {
+                            pageItems: "#P32_ID_ZALADUNKU"
+                        }, {
+                            success: function(data) {
+                                if (data) {
+                                    $s("PODSUMOWANIE_WAGA", data.total_weight);
+                                    $s("PODSUMOWANIE_LUDNOSC", data.total_passengers);
+                                    apex.server.process("UPDATE_SUMMARY", {
+                                        pageItems: "#P32_ID_ZALADUNKU"
+                                    }, {
+                                        success: function(data) {
+                                            if (data) {
+                                                $s("PODSUMOWANIE_WAGA", data.total_weight);
+                                                $s("PODSUMOWANIE_LUDNOSC", data.total_passengers);
+                                            }
+                                        },
+                                        error: function(e) {
+                                            apex.message.alert("Wystąpił błąd podczas aktualizacji podsumowania: " + e.responseText);
+                                        }
+                                    });
+                                }
+                            },
+                            error: function(e) {
+                                apex.message.alert("Wystąpił błąd podczas aktualizacji podsumowania: " + e.responseText);
+                            }
+                        });
+                    }
+                });
+            }
+        
+          config.toolbarData = toolbarData;
+          return config;
+        }
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 165951642426193206
+      identification: 
+        name: Primary Report
+        alias: 1659517
+
+  columns: 
+  - # ====== Column: NR_KONTENERA ================================
+    id: 164789910718502937
+    identification: 
+      column-name: NR_KONTENERA
+      type: Display Only
+
+    heading: 
+      heading: Nr Kontenera
+      alignment: start
+
+    settings: 
+      format: Plain Text
+      based-on: Item Value
+
+    layout: 
+      sequence: 40
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    source: 
+      type: Database Column
+      database-column: NR_KONTENERA
+      data-type: NUMBER
+      query-only: false
+      primary-key: true
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    session-state: 
+      data-type: VARCHAR2
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: KATEGORIA ===================================
+    id: 164790001545502938
+    identification: 
+      column-name: KATEGORIA
+      type: Display Only
+
+    heading: 
+      heading: Kategoria wagowa
+      alignment: start
+
+    settings: 
+      format: Plain Text
+      based-on: Item Value
+
+    layout: 
+      sequence: 50
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    source: 
+      type: Database Column
+      database-column: KATEGORIA
+      data-type: VARCHAR2
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    session-state: 
+      data-type: VARCHAR2
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Distinct Column
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    enable-users-to: 
+      sort: false
+      hide: true
+
+  - # ====== Column: WAGA_TONY ===================================
+    id: 164790126279502939
+    identification: 
+      column-name: WAGA_TONY
+      type: Display Only
+
+    heading: 
+      heading: Waga [T]
+      alignment: end
+
+    settings: 
+      format: Plain Text
+      based-on: Item Value
+
+    layout: 
+      sequence: 60
+      column-alignment: end
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    source: 
+      type: Database Column
+      database-column: WAGA_TONY
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    session-state: 
+      data-type: VARCHAR2
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: PRZYPISANY ==================================
+    id: 165969593232217504
+    identification: 
+      column-name: PRZYPISANY
+      type: Checkbox
+
+    heading: 
+      heading: Przypisany do tej listy?
+      alignment: center
+
+    settings: 
+      use-defaults: true
+
+    layout: 
+      sequence: 80
+      column-alignment: center
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+
+    source: 
+      type: Database Column
+      database-column: PRZYPISANY
+      data-type: VARCHAR2
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Distinct Column
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+    read-only: 
+      type: Always
+      execute: Once
+
+  - # ====== Column: APEX$ROW_ACTION =============================
+    id: 165972949904217538
+    identification: 
+      column-name: APEX$ROW_ACTION
+      type: Actions Menu
+
+    layout: 
+      sequence: 20
+
+  - # ====== Column: APEX$ROW_SELECTOR ===========================
+    id: 165973079999217539
+    identification: 
+      column-name: APEX$ROW_SELECTOR
+      type: Row Selector
+
+    settings: 
+      enable-multi-select: true
+      show-select-all: true
+      hide-control: false
+
+    layout: 
+      sequence: 10
+
+  - # ====== Column: ID_WLASCICIELA ==============================
+    id: 165973385957217542
+    identification: 
+      column-name: ID_WLASCICIELA
+      type: Display Only
+
+    heading: 
+      heading: Właściciel kontenera
+      alignment: end
+
+    settings: 
+      format: Plain Text
+      based-on: Display Value of List of Values
+
+    layout: 
+      sequence: 70
+      column-alignment: end
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: WLASCICIELE.NAZWA # 105041760570526277
+      display-extra-values: true
+
+    source: 
+      type: Database Column
+      database-column: ID_WLASCICIELA
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    session-state: 
+      data-type: VARCHAR2
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Use List of Values
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: ID_ZALADUNKU ================================
+    id: 205616937208214601
+    identification: 
+      column-name: ID_ZALADUNKU
+      type: Display Only
+
+    heading: 
+      heading: Przypisany do
+      alignment: end
+
+    settings: 
+      format: Plain Text
+      based-on: Item Value
+
+    layout: 
+      sequence: 90
+      column-alignment: end
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    source: 
+      type: Database Column
+      database-column: ID_ZALADUNKU
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    session-state: 
+      data-type: VARCHAR2
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  printing: 
+    page: 
+      size: Letter
+      orientation: Landscape
+      units: Inches
+      width: 11
+      height: 8.5
+      border-width: 0.5
+      border-color: '#666666'
+
+    page-header: 
+      font: Helvetica
+      font-weight: Normal
+      font-size: 12
+      font-color: '#000000'
+      alignment: center
+
+    column-headings: 
+      font: Helvetica
+      font-weight: Bold
+      font-size: 10
+      font-color: '#000000'
+      background-color: '#EEEEEE'
+
+    columns: 
+      font: Helvetica
+      font-weight: Normal
+      font-size: 10
+      font-color: '#000000'
+      background-color: '#FFFFFF'
+
+    page-footer: 
+      font: Helvetica
+      font-weight: Normal
+      font-size: 12
+      font-color: '#000000'
+      alignment: center
+
+- # ====== Region: Pasażerowie =================================
+  id: 164787340992502911
+  identification: 
+    name: Pasażerowie
+    type: Interactive Grid
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT 
+          CASE WHEN P.ID_ZALADUNKU = :P32_ID_ZALADUNKU THEN 'Y' ELSE 'N' END AS PRZYPISANY,
+          ID_PASAZERA,
+          IMIE, 
+          NAZWISKO, 
+          PESEL, 
+          E_MAIL,
+          P.ID_ZALADUNKU
+      FROM PASAZEROWIE P LEFT JOIN LISTY_ZALADUNKOWE L ON P.ID_ZALADUNKU=L.ID_ZALADUNKU
+      WHERE CZY_UZYTA IS NULL OR CZY_UZYTA = 'NIE'
+      
+    page-items-to-submit: 
+    - P32_ID_ZALADUNKU
+
+  layout: 
+    sequence: 50
+    parent-region: Przypisanie do listy # 152818999747707926
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: pasazerowie_id
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 164790344780502941
+    edit: 
+      enabled: true
+      lost-update-type: Row Values
+
+    performance: 
+      lazy-loading: false
+
+    appearance: 
+      select-first-row: true
+      fixed-row-height: true
+
+    pagination: 
+      type: Page
+      show-total-count: true
+
+    toolbar: 
+      show: true
+      controls: 
+      - Search Column Selection
+      - Search Field
+      - Actions Menu
+      - Reset Button
+
+    enable-users-to: 
+      save-public-report: false
+      flashback: true
+      define-chart-view: true
+      download: true
+
+    download: 
+      formats: 
+      - CSV
+      - HTML
+      - Excel
+      - PDF
+      send-as-email: true
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    advanced: 
+      initialization-javascript-function: |
+        function(config) {
+            let $ = apex.jQuery,
+                toolbarData = $.apex.interactiveGrid.copyDefaultToolbar(),
+                toolbarGroup = toolbarData.toolbarFind("actions3");
+                toolbarGroup.controls.push({
+                    type: "BUTTON",
+                    id: "custom_ig_save_btn",
+                    label: "Przypisz",
+                    action: "save",
+                    icon: "icon-ig-save",
+                    iconBeforeLabel: true,
+                    hot: true,
+                    action: "custom-ig-save2"
+                });
+        
+            config.initActions = function( actions ) {
+                actions.add( {
+                    name: "custom-ig-save2",
+                    label: "Custom IG Save",
+                    action: function(event, focusElement) {
+                        var region = apex.region("pasazerowie_id");
+        
+                        if (!region) {
+                            apex.message.alert("Region z interaktywną tabelą nie został znaleziony. Sprawdź Static ID.");
+                            return;
+                        }
+        
+                        var grid = region.widget().interactiveGrid("getViews", "grid");
+                        var selectedRecords = grid.getSelectedRecords();
+        
+                        if (selectedRecords.length === 0) {
+                            apex.message.alert("Nie zaznaczono żadnych wierszy.");
+                            return;
+                        }
+        
+                        var selectedIds = selectedRecords.map(function(record) {
+                            return record[1];
+                        });
+        
+                        apex.server.process("SAVE_SELECTED2", {
+                            x01: selectedIds.join(','),
+                            pageItems: "#P32_ID_ZALADUNKU"
+                        }, {
+                            success: function(data) {
+                                apex.message.showPageSuccess("Zaktualizowano dane.");
+                                apex.region("pasazerowie_id").refresh();
+                                apex.server.process("UPDATE_SUMMARY", {
+                                    pageItems: "#P32_ID_ZALADUNKU"
+                                }, {
+                                    success: function(data) {
+                                        if (data) {
+                                            $s("PODSUMOWANIE_WAGA", data.total_weight);
+                                            $s("PODSUMOWANIE_LUDNOSC", data.total_passengers);
+                                        }
+                                    },
+                                    error: function(e) {
+                                        apex.message.alert("Wystąpił błąd podczas aktualizacji podsumowania: " + e.responseText);
+                                    }
+                                });
+                            },
+                            error: function(e) {
+                                apex.message.alert("Wystąpił błąd podczas zapisywania danych: " + e.responseText);
+                            }
+                        });
+                    }
+                });
+            }
+        
+          config.toolbarData = toolbarData;
+          return config;
+        }
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 165952342086193210
+      identification: 
+        name: Primary Report
+        alias: 1659524
+
+  columns: 
+  - # ====== Column: ID_PASAZERA =================================
+    id: 164790445113502942
+    identification: 
+      column-name: ID_PASAZERA
+      type: Display Only
+
+    heading: 
+      heading: ID Pasażera
+      alignment: start
+
+    settings: 
+      format: Plain Text
+      based-on: Item Value
+
+    layout: 
+      sequence: 40
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    source: 
+      type: Database Column
+      database-column: ID_PASAZERA
+      data-type: NUMBER
+      query-only: false
+      primary-key: true
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    session-state: 
+      data-type: VARCHAR2
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: IMIE ========================================
+    id: 164790571278502943
+    identification: 
+      column-name: IMIE
+      type: Display Only
+
+    heading: 
+      heading: Imię
+      alignment: start
+
+    settings: 
+      format: Plain Text
+      based-on: Item Value
+
+    layout: 
+      sequence: 50
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    source: 
+      type: Database Column
+      database-column: IMIE
+      data-type: VARCHAR2
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    session-state: 
+      data-type: VARCHAR2
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Distinct Column
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: NAZWISKO ====================================
+    id: 164790630566502944
+    identification: 
+      column-name: NAZWISKO
+      type: Display Only
+
+    heading: 
+      heading: Nazwisko
+      alignment: start
+
+    settings: 
+      format: Plain Text
+      based-on: Item Value
+
+    layout: 
+      sequence: 60
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    source: 
+      type: Database Column
+      database-column: NAZWISKO
+      data-type: VARCHAR2
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    session-state: 
+      data-type: VARCHAR2
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Distinct Column
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: PESEL =======================================
+    id: 164790727423502945
+    identification: 
+      column-name: PESEL
+      type: Display Only
+
+    heading: 
+      heading: PESEL
+      alignment: end
+
+    settings: 
+      format: Plain Text
+      based-on: Item Value
+
+    layout: 
+      sequence: 70
+      column-alignment: end
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    source: 
+      type: Database Column
+      database-column: PESEL
+      data-type: VARCHAR2
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    session-state: 
+      data-type: VARCHAR2
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Distinct Column
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: E_MAIL ======================================
+    id: 164790845073502946
+    identification: 
+      column-name: E_MAIL
+      type: Display Only
+
+    heading: 
+      heading: E-mail
+      alignment: start
+
+    settings: 
+      format: Plain Text
+      based-on: Item Value
+
+    layout: 
+      sequence: 80
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    source: 
+      type: Database Column
+      database-column: E_MAIL
+      data-type: VARCHAR2
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    session-state: 
+      data-type: VARCHAR2
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Distinct Column
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: PRZYPISANY ==================================
+    id: 165969611824217505
+    identification: 
+      column-name: PRZYPISANY
+      type: Checkbox
+
+    heading: 
+      heading: Przypisany do tej listy?
+      alignment: center
+
+    settings: 
+      use-defaults: true
+
+    layout: 
+      sequence: 30
+      column-alignment: center
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+
+    source: 
+      type: Database Column
+      database-column: PRZYPISANY
+      data-type: VARCHAR2
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Distinct Column
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: APEX$ROW_ACTION =============================
+    id: 165973449664217543
+    identification: 
+      column-name: APEX$ROW_ACTION
+      type: Actions Menu
+
+    layout: 
+      sequence: 20
+
+  - # ====== Column: APEX$ROW_SELECTOR ===========================
+    id: 165973565334217544
+    identification: 
+      column-name: APEX$ROW_SELECTOR
+      type: Row Selector
+
+    settings: 
+      enable-multi-select: true
+      show-select-all: true
+      hide-control: false
+
+    layout: 
+      sequence: 10
+
+  - # ====== Column: ID_ZALADUNKU ================================
+    id: 205617095497214602
+    identification: 
+      column-name: ID_ZALADUNKU
+      type: Number Field
+
+    heading: 
+      heading: Przypisany do
+      alignment: end
+
+    settings: 
+      number-alignment: Start
+      virtual-keyboard: Decimal
+
+    layout: 
+      sequence: 90
+      column-alignment: end
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+
+    source: 
+      type: Database Column
+      database-column: ID_ZALADUNKU
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  printing: 
+    page: 
+      size: Letter
+      orientation: Landscape
+      units: Inches
+      width: 11
+      height: 8.5
+      border-width: 0.5
+      border-color: '#666666'
+
+    page-header: 
+      font: Helvetica
+      font-weight: Normal
+      font-size: 12
+      font-color: '#000000'
+      alignment: center
+
+    column-headings: 
+      font: Helvetica
+      font-weight: Bold
+      font-size: 10
+      font-color: '#000000'
+      background-color: '#EEEEEE'
+
+    columns: 
+      font: Helvetica
+      font-weight: Normal
+      font-size: 10
+      font-color: '#000000'
+      background-color: '#FFFFFF'
+
+    page-footer: 
+      font: Helvetica
+      font-weight: Normal
+      font-size: 12
+      font-color: '#000000'
+      alignment: center
+
+- # ====== Region: Kontenery ===================================
+  id: 260715999677768429
+  identification: 
+    name: Kontenery
+    type: Static Content
+
+  source: 
+    html-code: |
+      <h2 style="margin: 0; font-size: 20px; font-weight: bold; text-align: center; background-color:#beccd5;">
+          Wybierz kontenery
+      </h2>
+      
+
+  layout: 
+    sequence: 10
+    parent-region: Przypisanie do listy # 152818999747707926
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--removeHeader js-removeLandmark
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Pasazerowie =================================
+  id: 260716088434768430
+  identification: 
+    name: Pasazerowie
+    type: Static Content
+
+  source: 
+    html-code: |
+      <h2 style="margin: 0; font-size: 20px; font-weight: bold; text-align: center; background-color:#beccd5;">
+          Wybierz pasażerów
+      </h2>
+      
+
+  layout: 
+    sequence: 40
+    parent-region: Przypisanie do listy # 152818999747707926
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--removeHeader js-removeLandmark
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+page-items: 
+- # ====== Page Item: P32_ID_ZALADUNKU =========================
+  id: 152819259539707926
+  identification: 
+    name: P32_ID_ZALADUNKU
+    type: Select List
+
+  label: 
+    label: ID Listy przewozowej
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 10
+    region: Przypisanie do listy # 152818999747707926
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: SELECT ID_ZALADUNKU D, ID_ZALADUNKU R FROM LISTY_ZALADUNKOWE WHERE CZY_UZYTA = 'NIE' ORDER BY ID_ZALADUNKU ASC
+    display-extra-values: true
+    display-null-value: true
+    null-display-value: '--'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Przypisanie do listy # 152818999747707926
+    column: ID_ZALADUNKU
+    data-type: NUMBER
+    query-only: false
+    primary-key: true
+
+  default: 
+    type: Item
+    item: P32_ID_ZALADUNKU
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P32_NAZWA_ROBOCZA ========================
+  id: 152820039136707936
+  identification: 
+    name: P32_NAZWA_ROBOCZA
+    type: Display Only
+
+  label: 
+    label: Nazwa Robocza
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 20
+    region: Przypisanie do listy # 152818999747707926
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Przypisanie do listy # 152818999747707926
+    column: NAZWA_ROBOCZA
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: PODSUMOWANIE_WAGA ========================
+  id: 165973891106217547
+  identification: 
+    name: PODSUMOWANIE_WAGA
+    type: Display Only
+
+  label: 
+    label: Łączna waga kontenerów [T]
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 30
+    region: Przypisanie do listy # 152818999747707926
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: PODSUMOWANIE_LUDNOSC =====================
+  id: 165973971082217548
+  identification: 
+    name: PODSUMOWANIE_LUDNOSC
+    type: Display Only
+
+  label: 
+    label: Liczba pasażerów
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 40
+    region: Przypisanie do listy # 152818999747707926
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: CANCEL ======================================
+  id: 152822408831707940
+  identification: 
+    button-name: CANCEL
+    label: Anuluj
+
+  layout: 
+    sequence: 10
+    region: Buttons # 152822077191707940
+    slot: CLOSE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+dynamic-actions: 
+- # ====== Dynamic Action: Set Details =========================
+  id: 119422890535864605
+  identification: 
+    name: Set Details
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P32_ID_ZALADUNKU
+
+  actions: 
+  - # ====== Action: SET NAZWA ROBOCZA ===========================
+    id: 119422947136864606
+    identification: 
+      name: SET NAZWA ROBOCZA
+      action: Set Value
+
+    settings: 
+      set-type: SQL Statement
+      sql-statement: |
+        select NAZWA_ROBOCZA
+        from LISTY_ZALADUNKOWE
+        where ID_ZALADUNKU = :P32_ID_ZALADUNKU
+      items-to-submit: 
+      - P32_ID_ZALADUNKU
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P32_NAZWA_ROBOCZA
+
+    execution: 
+      sequence: 10
+      event: Set Details # 119422890535864605
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Refresh Kontenery ===========================
+    id: 164788140506502919
+    identification: 
+      name: Refresh Kontenery
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Kontenery # 164786987443502907
+
+    execution: 
+      sequence: 60
+      event: Set Details # 119422890535864605
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh Pasażerowie =========================
+    id: 164788277857502920
+    identification: 
+      name: Refresh Pasażerowie
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Pasażerowie # 164787340992502911
+
+    execution: 
+      sequence: 70
+      event: Set Details # 119422890535864605
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: SET WAGA ====================================
+    id: 165974020970217549
+    identification: 
+      name: SET WAGA
+      action: Set Value
+
+    settings: 
+      set-type: SQL Statement
+      sql-statement: |
+        select NVL(SUM(WAGA_TONY), 0)
+        from KONTENERY
+        where ID_ZALADUNKU = :P32_ID_ZALADUNKU
+      items-to-submit: 
+      - P32_ID_ZALADUNKU
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - PODSUMOWANIE_WAGA
+
+    execution: 
+      sequence: 20
+      event: Set Details # 119422890535864605
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: SET LICZBA LUDZI ============================
+    id: 165974104962217550
+    identification: 
+      name: SET LICZBA LUDZI
+      action: Set Value
+
+    settings: 
+      set-type: SQL Statement
+      sql-statement: |
+        select COUNT(ID_PASAZERA)
+        from PASAZEROWIE
+        where ID_ZALADUNKU = :P32_ID_ZALADUNKU
+      items-to-submit: 
+      - P32_ID_ZALADUNKU
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - PODSUMOWANIE_LUDNOSC
+
+    execution: 
+      sequence: 40
+      event: Set Details # 119422890535864605
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+      stop-execution-on-error: true
+      wait-for-result: true
+
+- # ====== Dynamic Action: Cancel Dialog =======================
+  id: 152822508621707940
+  identification: 
+    name: Cancel Dialog
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: CANCEL # 152822408831707940
+
+  actions: 
+  - # ====== Action: Cancel Dialog ===============================
+    id: 152823376642707941
+    identification: 
+      action: Cancel Dialog
+
+    execution: 
+      sequence: 10
+      event: Cancel Dialog # 152822508621707940
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+processes: 
+- # ====== Process: Initialize form Przypisanie do listy =======
+  id: 152825013139707943
+  identification: 
+    name: Initialize form Przypisanie do listy
+    type: Form - Initialization
+    execution-chain: None
+    form-region: Przypisanie do listy # 152818999747707926
+
+  execution: 
+    sequence: 10
+    point: Before Header
+    run-process: Once Per Page Visit (default)
+
+- # ====== Process: Process form Przypisanie do listy ==========
+  id: 152825479058707944
+  identification: 
+    name: Process form Przypisanie do listy
+    type: Form - Automatic Row Processing (DML)
+    execution-chain: None
+    form-region: Przypisanie do listy # 152818999747707926
+
+  settings: 
+    target-type: Region Source
+    prevent-lost-updates: true
+    lock-row: Yes
+    return-primary-key(s)-after-insert: true
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+- # ====== Process: Close Dialog ===============================
+  id: 152825876993707944
+  identification: 
+    name: Close Dialog
+    type: Close Dialog
+    execution-chain: None
+
+  settings: 
+    show-success-messages: true
+
+  execution: 
+    sequence: 50
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    type: Request is contained in Value
+    value: CREATE,SAVE,DELETE
+
+- # ====== Process: SAVE_SELECTED ==============================
+  id: 165972589319217534
+  identification: 
+    name: SAVE_SELECTED
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      DECLARE
+          v_selected_ids VARCHAR2(4000);
+          v_id_list SYS.ODCINUMBERLIST;
+      BEGIN
+          v_selected_ids := APEX_APPLICATION.G_X01;
+      
+          -- Konwersja CSV na listę liczb
+          SELECT TO_NUMBER(REGEXP_SUBSTR(v_selected_ids, '[^,]+', 1, LEVEL))
+          BULK COLLECT INTO v_id_list
+          FROM DUAL
+          CONNECT BY LEVEL <= REGEXP_COUNT(v_selected_ids, ',') + 1;
+      
+          -- Aktualizacja tabeli KONTENERY
+          UPDATE KONTENERY
+          SET ID_ZALADUNKU = :P32_ID_ZALADUNKU
+          WHERE NR_KONTENERA IN (
+              SELECT COLUMN_VALUE FROM TABLE(v_id_list)
+          );
+      
+          -- Zwrot odpowiedzi JSON
+          apex_json.open_object; -- Otwórz obiekt JSON
+          apex_json.write('success', true); -- Dodaj pole success: true
+          apex_json.write('message', 'Zaktualizowano dane.'); -- Dodaj pole message
+          apex_json.close_object; -- Zamknij obiekt JSON
+      END;
+
+  execution: 
+    sequence: 90
+    point: Ajax Callback
+    run-process: Once Per Page Visit (default)
+
+- # ====== Process: Kontenery - Save Interactive Grid Data =====
+  id: 165973175718217540
+  identification: 
+    name: Kontenery - Save Interactive Grid Data
+    type: Interactive Grid - Automatic Row Processing (DML)
+    execution-chain: None
+    editable-region: Kontenery # 164786987443502907
+
+  settings: 
+    target-type: Region Source
+    prevent-lost-updates: true
+    lock-row: Yes
+    return-primary-key(s)-after-insert: true
+
+  execution: 
+    sequence: 100
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    execution-scope: For Created and Modified Rows
+
+- # ====== Process: Pasażerowie - Save Interactive Grid Data ===
+  id: 165973655241217545
+  identification: 
+    name: Pasażerowie - Save Interactive Grid Data
+    type: Interactive Grid - Automatic Row Processing (DML)
+    execution-chain: None
+    editable-region: Pasażerowie # 164787340992502911
+
+  settings: 
+    target-type: Region Source
+    prevent-lost-updates: true
+    lock-row: Yes
+    return-primary-key(s)-after-insert: true
+
+  execution: 
+    sequence: 110
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    execution-scope: For Created and Modified Rows
+
+- # ====== Process: SAVE_SELECTED2 =============================
+  id: 165973775552217546
+  identification: 
+    name: SAVE_SELECTED2
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      DECLARE
+          v_selected_ids VARCHAR2(4000);
+          v_id_list SYS.ODCINUMBERLIST;
+      BEGIN
+          v_selected_ids := APEX_APPLICATION.G_X01;
+      
+          -- Konwersja CSV na listę liczb
+          SELECT TO_NUMBER(REGEXP_SUBSTR(v_selected_ids, '[^,]+', 1, LEVEL))
+          BULK COLLECT INTO v_id_list
+          FROM DUAL
+          CONNECT BY LEVEL <= REGEXP_COUNT(v_selected_ids, ',') + 1;
+      
+          -- Aktualizacja tabeli PASAZEROWIE
+          UPDATE PASAZEROWIE
+          SET ID_ZALADUNKU = :P32_ID_ZALADUNKU
+          WHERE ID_PASAZERA IN (
+              SELECT COLUMN_VALUE FROM TABLE(v_id_list)
+          );
+      
+          -- Zwrot odpowiedzi JSON
+          apex_json.open_object; -- Otwórz obiekt JSON
+          apex_json.write('success', true); -- Dodaj pole success: true
+          apex_json.write('message', 'Zaktualizowano dane.'); -- Dodaj pole message
+          apex_json.close_object; -- Zamknij obiekt JSON
+      END;
+
+  execution: 
+    sequence: 100
+    point: Ajax Callback
+    run-process: Once Per Page Visit (default)
+
+- # ====== Process: UPDATE_SUMMARY =============================
+  id: 168623705563000812
+  identification: 
+    name: UPDATE_SUMMARY
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      DECLARE
+          v_total_weight NUMBER := 0;
+          v_total_passengers NUMBER := 0;
+      BEGIN
+          SELECT SUM(WAGA_TONY) 
+          INTO v_total_weight
+          FROM KONTENERY
+          WHERE ID_ZALADUNKU = :P32_ID_ZALADUNKU;
+      
+          SELECT COUNT(*) 
+          INTO v_total_passengers
+          FROM PASAZEROWIE
+          WHERE ID_ZALADUNKU = :P32_ID_ZALADUNKU;
+      
+          apex_json.open_object;
+          apex_json.write('total_weight', v_total_weight);
+          apex_json.write('total_passengers', v_total_passengers);
+          apex_json.close_object;
+      END;
+
+  execution: 
+    sequence: 110
+    point: Ajax Callback
+    run-process: Once Per Page Visit (default)
+

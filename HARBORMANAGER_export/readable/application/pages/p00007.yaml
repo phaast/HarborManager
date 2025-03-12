@@ -1,0 +1,844 @@
+---
+# ====== Page: Dokonywanie Zakupu ============================
+id: 7
+identification: 
+  name: Dokonywanie Zakupu
+  alias: ZAKUPPALIWA1
+  title: Zakup paliwo
+
+appearance: 
+  page-mode: Modal Dialog
+  dialog-template: Drawer
+  template-options: 
+  - '#DEFAULT#'
+  - js-dialog-class-t-Drawer--pullOutEnd
+
+dialog: 
+  chained: false
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Zakupy ======================================
+  id: 104966803922525988
+  identification: 
+    name: Zakupy
+    type: Form
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: ZAKUPY
+    include-rowid-column: false
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    edit: 
+      enabled: true
+      allowed-operations: 
+      - Add Row
+      - Update Row
+      - Delete Row
+      lost-update-type: Row Values
+
+- # ====== Region: Buttons =====================================
+  id: 104971985929525995
+  identification: 
+    name: Buttons
+    type: Static Content
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: REGION_POSITION_03
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Buttons Container
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: Text (escape special characters)
+      show-line-breaks: true
+
+page-items: 
+- # ====== Page Item: P7_NR_FAKTURY ============================
+  id: 104967216439525989
+  identification: 
+    name: P7_NR_FAKTURY
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: Zakupy # 104966803922525988
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Zakupy # 104966803922525988
+    column: NR_FAKTURY
+    data-type: NUMBER
+    query-only: true
+    primary-key: true
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P7_ILOSC_KUPIONEGO_L =====================
+  id: 104967537108525989
+  identification: 
+    name: P7_ILOSC_KUPIONEGO_L
+    type: Number Field
+
+  label: 
+    label: Ilość Paliwa [L]
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 70
+    region: Zakupy # 104966803922525988
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 32
+
+  validation: 
+    value-required: true
+    maximum-length: 255
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Zakupy # 104966803922525988
+    column: ILOSC_KUPIONEGO_L
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  default: 
+    type: Static
+    static-value: 0
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P7_KOSZT_RAZEM ===========================
+  id: 104967988246525990
+  identification: 
+    name: P7_KOSZT_RAZEM
+    type: Number Field
+
+  label: 
+    label: Koszt Razem [PLN]
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 80
+    region: Zakupy # 104966803922525988
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 32
+
+  validation: 
+    value-required: true
+    maximum-length: 255
+
+  advanced: 
+    post-text-: |
+      
+      
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Zakupy # 104966803922525988
+    column: KOSZT_RAZEM
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P7_DATA_ZAKUPU ===========================
+  id: 104968307537525990
+  identification: 
+    name: P7_DATA_ZAKUPU
+    type: Date Picker
+
+  label: 
+    label: Data Zakupu
+    alignment: Left
+
+  settings: 
+    show-time: true
+    display-as: Popup
+    minimum-date: None
+    maximum-date: None
+    multiple-months: No
+    use-defaults: true
+
+  layout: 
+    sequence: 20
+    region: Zakupy # 104966803922525988
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 32
+
+  validation: 
+    value-required: true
+    maximum-length: 255
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Zakupy # 104966803922525988
+    column: DATA_ZAKUPU
+    data-type: TIMESTAMP
+    query-only: false
+    primary-key: false
+
+  default: 
+    type: SQL Query (return single value)
+    sql-query-(return-single-value): SELECT SYSTIMESTAMP FROM DUAL
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P7_TYP_PALIWA_RAF ========================
+  id: 104968724545525990
+  identification: 
+    name: P7_TYP_PALIWA_RAF
+    type: Select List
+
+  label: 
+    label: Typ Paliwa
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 30
+    region: Zakupy # 104966803922525988
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: RAFINERIA.TYP_PALIWA # 104968870928525991
+    display-extra-values: true
+    display-null-value: true
+    null-display-value: '--'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Zakupy # 104966803922525988
+    column: TYP_PALIWA_RAF
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P7_TYP_PALIWA_MAG ========================
+  id: 104969449956525992
+  identification: 
+    name: P7_TYP_PALIWA_MAG
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 60
+    region: Zakupy # 104966803922525988
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Zakupy # 104966803922525988
+    column: TYP_PALIWA_MAG
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P7_CENA ==================================
+  id: 105441318636928025
+  identification: 
+    name: P7_CENA
+    type: Display Only
+
+  label: 
+    label: Cena [PLN/L]
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: false
+
+  layout: 
+    sequence: 40
+    region: Zakupy # 104966803922525988
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: CANCEL ======================================
+  id: 104972397965525995
+  identification: 
+    button-name: CANCEL
+    label: Anuluj
+
+  layout: 
+    sequence: 10
+    region: Buttons # 104971985929525995
+    slot: CLOSE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: DELETE ======================================
+  id: 104973797963525997
+  identification: 
+    button-name: DELETE
+    label: Usuń
+
+  layout: 
+    sequence: 20
+    region: Buttons # 104971985929525995
+    slot: DELETE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--danger
+    - t-Button--simple
+
+  behavior: 
+    action: Submit Page
+    execute-validations: false
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL DELETE action
+
+  confirmation: 
+    message: '&APP_TEXT$DELETE_MSG!RAW.'
+    style: Danger
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P7_NR_FAKTURY
+
+- # ====== Button: SAVE ========================================
+  id: 104974165929525997
+  identification: 
+    button-name: SAVE
+    label: Wprowadź zmiany
+
+  layout: 
+    sequence: 30
+    region: Buttons # 104971985929525995
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL UPDATE action
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P7_NR_FAKTURY
+
+- # ====== Button: CREATE ======================================
+  id: 104974521086525997
+  identification: 
+    button-name: CREATE
+    label: Zakup
+
+  layout: 
+    sequence: 40
+    region: Buttons # 104971985929525995
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL INSERT action
+
+  server-side-condition: 
+    type: Item is NULL
+    item: P7_NR_FAKTURY
+
+dynamic-actions: 
+- # ====== Dynamic Action: Cancel Dialog =======================
+  id: 104972427421525995
+  identification: 
+    name: Cancel Dialog
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: CANCEL # 104972397965525995
+
+  actions: 
+  - # ====== Action: Cancel Dialog ===============================
+    id: 104973203066525996
+    identification: 
+      action: Cancel Dialog
+
+    execution: 
+      sequence: 10
+      event: Cancel Dialog # 104972427421525995
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Set TYP_PALIWA_MAG and CENA =========
+  id: 105440262874928014
+  identification: 
+    name: Set TYP_PALIWA_MAG and CENA
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P7_TYP_PALIWA_RAF
+
+  actions: 
+  - # ====== Action: Set Value TYP PALIWA ========================
+    id: 105440372574928015
+    identification: 
+      name: Set Value TYP PALIWA
+      action: Set Value
+
+    settings: 
+      set-type: SQL Statement
+      sql-statement: |
+        select TYP_PALIWA
+        from MAGAZYN_PALIWA
+        where TYP_PALIWA = :P7_TYP_PALIWA_RAF
+      items-to-submit: 
+      - P7_TYP_PALIWA_RAF
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P7_TYP_PALIWA_MAG
+
+    execution: 
+      sequence: 10
+      event: Set TYP_PALIWA_MAG and CENA # 105440262874928014
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Set Value CENA ==============================
+    id: 105441517105928027
+    identification: 
+      name: Set Value CENA
+      action: Set Value
+
+    settings: 
+      set-type: SQL Statement
+      sql-statement: |
+        SELECT CENA_ZL_L 
+        FROM RAFINERIA 
+        WHERE TYP_PALIWA = :P7_TYP_PALIWA_RAF
+      items-to-submit: 
+      - P7_TYP_PALIWA_RAF
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P7_CENA
+
+    execution: 
+      sequence: 20
+      event: Set TYP_PALIWA_MAG and CENA # 105440262874928014
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+      stop-execution-on-error: true
+      wait-for-result: true
+
+- # ====== Dynamic Action: Calculate KOSZT_RAZEM ===============
+  id: 105440834731928020
+  identification: 
+    name: Calculate KOSZT_RAZEM
+
+  execution: 
+    sequence: 30
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P7_CENA
+    - P7_ILOSC_KUPIONEGO_L
+
+  client-side-condition: 
+    type: JavaScript expression
+    javascript-expression: |
+      (apex.item('P7_TYP_PALIWA_RAF').getValue() != '') &&
+      (apex.item('P7_ILOSC_KUPIONEGO_L').getValue() != '')
+
+  actions: 
+  - # ====== Action: Set Value KOSZT_RAZEM =======================
+    id: 105441699579928028
+    identification: 
+      name: Set Value KOSZT_RAZEM
+      action: Set Value
+
+    settings: 
+      set-type: PL/SQL Function Body
+      pl/sql-function-body: 'RETURN(:P7_CENA * :P7_ILOSC_KUPIONEGO_L);'
+      items-to-submit: 
+      - P7_CENA
+      - P7_ILOSC_KUPIONEGO_L
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P7_KOSZT_RAZEM
+
+    execution: 
+      sequence: 10
+      event: Calculate KOSZT_RAZEM # 105440834731928020
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+      stop-execution-on-error: true
+      wait-for-result: true
+
+processes: 
+- # ====== Process: Initialize form Zakupy =====================
+  id: 104974952827525998
+  identification: 
+    name: Initialize form Zakupy
+    type: Form - Initialization
+    execution-chain: None
+    form-region: Zakupy # 104966803922525988
+
+  execution: 
+    sequence: 10
+    point: Before Header
+    run-process: Once Per Page Visit (default)
+
+- # ====== Process: Process form Zakupy ========================
+  id: 104975334641525998
+  identification: 
+    name: Process form Zakupy
+    type: Form - Automatic Row Processing (DML)
+    execution-chain: None
+    form-region: Zakupy # 104966803922525988
+
+  settings: 
+    target-type: Region Source
+    prevent-lost-updates: true
+    lock-row: Yes
+    return-primary-key(s)-after-insert: true
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+- # ====== Process: Close Dialog ===============================
+  id: 104975791379525998
+  identification: 
+    name: Close Dialog
+    type: Close Dialog
+    execution-chain: None
+
+  settings: 
+    show-success-messages: true
+
+  execution: 
+    sequence: 50
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    type: Request is contained in Value
+    value: CREATE,SAVE,DELETE
+

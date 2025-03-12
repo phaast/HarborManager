@@ -1,0 +1,1417 @@
+---
+# ====== Page: Listy Przewozowe ==============================
+id: 10
+identification: 
+  name: Listy Przewozowe
+  alias: LISTYPRZEWOZOWE
+  title: Listy Przewozowe - HarborManager
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+css: 
+  inline: |
+    .stats-container { display: flex; 
+                        justify-content: space-around; 
+                        gap: 10px; 
+                        align-items: center; 
+                        flex-wrap: wrap; }
+    .stats-box { flex: 1; 
+                    min-width: 200px;
+                    max-width: 300px;  
+                    text-align: center; 
+                    border: 1px solid #ccc; 
+                    border-radius: 8px; 
+                    padding: 10px; 
+                    height: 138px;}
+    .stats-box p:first-child { font-size: 15px; 
+                                margin: 0; }
+    .stats-box p:last-child { font-size: 48px; 
+                                font-weight: 
+                                bold;
+                                padding-top: 25px;}
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+help: 
+  help-text: |
+    <p>To find data enter a search term into the search dialog, or click on the column headings to limit the records returned.</p>
+    
+    <p>You can perform numerous functions by clicking the <strong>Actions</strong> button. This includes selecting the columns that are displayed / hidden and their display sequence, plus numerous data and format functions.  You can also define additional views of the data using the chart, group by, and pivot options.</p>
+    
+    <p>If you want to save your customizations select report, or click download to unload the data. Enter you email address and time frame under subscription to be sent the data on a regular basis.<p>
+    
+    <p>For additional information click Help at the bottom of the Actions menu.</p> 
+    
+    <p>Click the <strong>Reset</strong> button to reset the interactive report back to the default settings.</p>
+
+regions: 
+- # ====== Region: Listy Zaladunkowe ===========================
+  id: 105005305836526110
+  identification: 
+    name: Listy Zaladunkowe
+    type: Interactive Report
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: LISTY_ZALADUNKOWE
+    include-rowid-column: false
+
+  layout: 
+    sequence: 60
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: None
+    render-components: Above Content
+
+  advanced: 
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 105005435634526110
+    link: 
+      link-column: Link to Custom Target
+      target: 
+        url: 'f?p=&APP_ID.:11:&APP_SESSION.::&DEBUG.:RP:P11_ID_ZALADUNKU:\#ID_ZALADUNKU#\'
+        page: 11 # Edycja Listy Przewozowej
+        clear-cache: RP
+        values: 
+          p11_id_zaladunku: '#ID_ZALADUNKU#'
+
+      link-icon: <span role="img" aria-label="Edit" class="fa fa-edit" title="Edit"></span>
+
+    pagination: 
+      type: Row Ranges X to Y
+      display-position: Bottom - Right
+
+    performance: 
+      lazy-loading: false
+
+    messages: 
+      when-no-data-found: No data found.
+      when-more-data-found: 'The maximum row count for this report is #MAX_ROW_COUNT# rows.  Please apply a filter to reduce the number of records in your query.'
+
+    search-bar: 
+      include-search-bar: true
+      search-field: true
+      finder-drop-down: true
+      reports-select-list: true
+      rows-per-page-selector: false
+
+    actions-menu: 
+      include-actions-menu: true
+      filter: true
+      select-columns: true
+      rows-per-page: true
+      sort: true
+      control-break: true
+      highlight: true
+      compute: true
+      aggregate: true
+      chart: true
+      group-by: true
+      pivot: true
+      flashback: true
+      save-report: true
+      save-public-report: false
+      reset: true
+      help: true
+      download: true
+      subscription: true
+
+    download: 
+      formats: 
+      - CSV
+      - HTML
+      - Excel
+      - PDF
+      send-as-email: true
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 105173398493526720
+      identification: 
+        name: Primary Report
+        alias: 1051734
+
+    columns: 
+    - # ====== Column: ID_ZALADUNKU ================================
+      id: 105006195916526112
+      identification: 
+        column-name: ID_ZALADUNKU
+        type: Plain Text
+
+      heading: 
+        heading: ID
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 0
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: true
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: DATA_STWORZENIA =============================
+      id: 105006545804526112
+      identification: 
+        column-name: DATA_STWORZENIA
+        type: Plain Text
+
+      heading: 
+        heading: Data Utworzenia
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 20
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+        date-ranges: All
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: NAZWA_ROBOCZA ===============================
+      id: 105443767247928049
+      identification: 
+        column-name: NAZWA_ROBOCZA
+        type: Plain Text
+
+      heading: 
+        heading: Nazwa Robocza
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 10
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CZY_UZYTA ===================================
+      id: 105443854949928050
+      identification: 
+        column-name: CZY_UZYTA
+        type: Plain Text
+
+      heading: 
+        heading: Czy użyta
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 30
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    printing: 
+      output: 
+        layout: Default Report Layout
+        view-file-as: Attachment
+
+      page: 
+        size: Letter
+        orientation: Landscape
+        units: Inches
+        width: 11
+        height: 8.5
+        border-width: 0.5
+        border-color: '#666666'
+
+      page-header: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+        page-header-text: Listy Zaladunkowe
+
+      column-headings: 
+        font: Helvetica
+        font-weight: Bold
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#EEEEEE'
+
+      columns: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#FFFFFF'
+
+      page-footer: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+
+- # ====== Region: Breadcrumb ==================================
+  id: 105008280799526114
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 104632925000525429
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  header-and-footer: 
+    footer-text: Przegląd. Dodawanie nowych list przewozowych.
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: WykresListy =================================
+  id: 168624050558000815
+  identification: 
+    name: WykresListy
+    title: Statystyka
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - i-h320
+    - t-Region--removeHeader js-removeLandmark
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 168624190681000816
+    chart: 
+      type: Pie
+
+    title: 
+      title: ROZKŁAD WYKORZYSTANIA LIST
+
+    layout: 
+      height: 255
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: true
+
+    settings: 
+      pie-selection-effect: Highlight
+
+    value: 
+      pie-chart-other-threshold: 0
+      format: Decimal
+      decimal-places: 0
+      format-scaling: None
+
+    animation: 
+      on-display: Automatic
+      on-data-change: Automatic
+
+    tooltip: 
+      show: true
+      show-series-name: true
+      show-value: true
+
+    legend: 
+      show: true
+      position: Automatic
+      hide-and-show-behavior: Rescale
+
+    series: 
+    - # ====== Series: ile zuzyto ==================================
+      id: 168624214666000817
+      identification: 
+        name: ile zuzyto
+
+      execution: 
+        sequence: 20
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: select 'NIE' label, COUNT(*) value from LISTY_ZALADUNKOWE WHERE CZY_UZYTA = 'NIE'
+
+      column-mapping: 
+        label: LABEL
+        value: VALUE
+
+      appearance: 
+        color: '#ff9500'
+
+      label: 
+        show: true
+        position: Automatic
+        display-as: Label
+
+    - # ====== Series: ile zuzyto_1 ================================
+      id: 168626473110000839
+      identification: 
+        name: ile zuzyto_1
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: select 'TAK' label, COUNT(*) value from LISTY_ZALADUNKOWE WHERE CZY_UZYTA = 'TAK'
+
+      column-mapping: 
+        label: LABEL
+        value: VALUE
+
+      appearance: 
+        color: '#34aadc'
+
+      label: 
+        show: true
+        position: Automatic
+        display-as: Label
+
+- # ====== Region: WykresKontenery =============================
+  id: 168624669845000821
+  identification: 
+    name: WykresKontenery
+    title: Statystyka
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - i-h320
+    - t-Region--removeHeader js-removeLandmark
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 168624708059000822
+    chart: 
+      type: Pie
+
+    title: 
+      title: STAN KONTENERÓW
+
+    layout: 
+      height: 255
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: true
+
+    settings: 
+      pie-selection-effect: Highlight
+
+    value: 
+      pie-chart-other-threshold: 0
+      format: Decimal
+      decimal-places: 0
+      format-scaling: None
+
+    animation: 
+      on-display: Automatic
+      on-data-change: Automatic
+
+    tooltip: 
+      show: true
+      show-series-name: true
+      show-value: true
+
+    legend: 
+      show: true
+      position: Automatic
+      hide-and-show-behavior: Rescale
+
+    advanced: 
+      initialization-javascript-function: |
+        function( options ) {  
+        
+            options.hiddenCategories = ["kontenery_2"];  
+        
+            return options;     
+        
+        } 
+
+    series: 
+    - # ====== Series: kontenery ===================================
+      id: 168624990415000824
+      identification: 
+        name: kontenery
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          SELECT 'PRZYPISANE' AS "PRZYPISANE", COUNT(*)
+          FROM KONTENERY K LEFT JOIN LISTY_ZALADUNKOWE L ON K.ID_ZALADUNKU=L.ID_ZALADUNKU  
+          WHERE K.ID_ZALADUNKU IS NOT NULL AND CZY_UZYTA = 'NIE'
+
+      column-mapping: 
+        label: PRZYPISANE
+        value: COUNT(*)
+
+      appearance: 
+        color: '#34aadc'
+
+      label: 
+        show: true
+        position: Automatic
+        display-as: Label
+
+    - # ====== Series: kontenery_1 =================================
+      id: 168625017855000825
+      identification: 
+        name: kontenery_1
+
+      execution: 
+        sequence: 20
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: "SELECT 'NIEPRZYPISANE' AS \"NIEPRZYPISANE\", COUNT(*) FROM KONTENERY WHERE ID_ZALADUNKU IS NULL "
+
+      column-mapping: 
+        label: NIEPRZYPISANE
+        value: COUNT(*)
+
+      appearance: 
+        color: '#ff2d55'
+
+      label: 
+        show: true
+        position: Automatic
+        display-as: Label
+
+    - # ====== Series: kontenery_2 =================================
+      id: 168626551839000840
+      identification: 
+        name: kontenery_2
+
+      execution: 
+        sequence: 30
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          SELECT 'ODDELEGOWANE' AS "ODDELEGOWANE", COUNT(*)
+          FROM KONTENERY K LEFT JOIN LISTY_ZALADUNKOWE L ON K.ID_ZALADUNKU=L.ID_ZALADUNKU  
+          WHERE K.ID_ZALADUNKU IS NOT NULL AND CZY_UZYTA = 'TAK'
+
+      column-mapping: 
+        label: ODDELEGOWANE
+        value: COUNT(*)
+
+      appearance: 
+        color: '#4cd964'
+
+      label: 
+        show: true
+        position: Automatic
+        display-as: Label
+
+      advanced: 
+        static-id: kontenery_2
+
+- # ====== Region: WykresPasazerowie ===========================
+  id: 168625174880000826
+  identification: 
+    name: WykresPasazerowie
+    title: Statystyka
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 50
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - i-h320
+    - t-Region--removeHeader js-removeLandmark
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 168625289974000827
+    chart: 
+      type: Pie
+
+    title: 
+      title: STAN PASAŻERÓW
+
+    layout: 
+      height: 255
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: true
+
+    settings: 
+      pie-selection-effect: Highlight
+
+    value: 
+      pie-chart-other-threshold: 0
+      format: Decimal
+      decimal-places: 0
+      format-scaling: None
+
+    animation: 
+      on-display: Automatic
+      on-data-change: Automatic
+
+    tooltip: 
+      show: true
+      show-series-name: true
+      show-value: true
+
+    legend: 
+      show: true
+      position: Automatic
+      hide-and-show-behavior: Rescale
+
+    advanced: 
+      initialization-javascript-function: |
+        function( options ) {  
+        
+            options.hiddenCategories = ["pasazerowie_2"];  
+        
+            return options;     
+        
+        } 
+
+    series: 
+    - # ====== Series: pasazerowie =================================
+      id: 168625359730000828
+      identification: 
+        name: pasazerowie
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          SELECT 'PRZYPISANI' AS "PRZYPISANI", COUNT(*)
+          FROM PASAZEROWIE K LEFT JOIN LISTY_ZALADUNKOWE L ON K.ID_ZALADUNKU=L.ID_ZALADUNKU  
+          WHERE K.ID_ZALADUNKU IS NOT NULL AND CZY_UZYTA = 'NIE'
+
+      column-mapping: 
+        label: PRZYPISANI
+        value: COUNT(*)
+
+      appearance: 
+        color: '#34aadc'
+
+      label: 
+        show: true
+        position: Automatic
+        display-as: Label
+
+    - # ====== Series: paszerowie_1 ================================
+      id: 168625442191000829
+      identification: 
+        name: paszerowie_1
+
+      execution: 
+        sequence: 20
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: "SELECT 'NIEPRZYPISANE' AS \"NIEPRZYPISANE\", COUNT(*) FROM PASAZEROWIE WHERE ID_ZALADUNKU IS NULL "
+
+      column-mapping: 
+        label: NIEPRZYPISANE
+        value: COUNT(*)
+
+      appearance: 
+        color: '#ffcc00'
+
+      label: 
+        show: true
+        position: Automatic
+        display-as: Label
+
+    - # ====== Series: paszerowie_2 ================================
+      id: 168626665385000841
+      identification: 
+        name: paszerowie_2
+
+      execution: 
+        sequence: 30
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          SELECT 'ODDELEGOWANI' AS "ODDELEGOWANI", COUNT(*)
+          FROM PASAZEROWIE K LEFT JOIN LISTY_ZALADUNKOWE L ON K.ID_ZALADUNKU=L.ID_ZALADUNKU  
+          WHERE K.ID_ZALADUNKU IS NOT NULL AND CZY_UZYTA = 'TAK'
+
+      column-mapping: 
+        label: ODDELEGOWANI
+        value: COUNT(*)
+
+      appearance: 
+        color: '#4cd964'
+
+      label: 
+        show: true
+        position: Automatic
+        display-as: Label
+
+      advanced: 
+        static-id: pasazerowie_2
+
+- # ====== Region: OpisWykresow ================================
+  id: 168626300676000838
+  identification: 
+    name: OpisWykresow
+    type: Dynamic Content
+
+  source: 
+    language: PL/SQL
+    pl/sql-function-body-returning-a-clob: |
+      DECLARE
+          v_html CLOB;
+          v_listy_oczekujace NUMBER := 0;
+          v_kontenery_oddelegowane NUMBER := 0;
+          v_pasazerowie_oddelegowani NUMBER := 0;
+          v_listy_zrealizowane NUMBER := 0;
+      BEGIN
+          SELECT COUNT(*) INTO v_listy_oczekujace
+          FROM LISTY_ZALADUNKOWE WHERE CZY_UZYTA = 'NIE';
+      
+          SELECT COUNT(*) INTO v_listy_zrealizowane
+          FROM LISTY_ZALADUNKOWE WHERE CZY_UZYTA = 'TAK';
+      
+          SELECT COUNT(*) INTO v_kontenery_oddelegowane
+          FROM KONTENERY K LEFT JOIN LISTY_ZALADUNKOWE L ON K.ID_ZALADUNKU=L.ID_ZALADUNKU  
+          WHERE K.ID_ZALADUNKU IS NOT NULL AND CZY_UZYTA = 'TAK';
+      
+          SELECT COUNT(*) INTO v_pasazerowie_oddelegowani
+          FROM PASAZEROWIE K LEFT JOIN LISTY_ZALADUNKOWE L ON K.ID_ZALADUNKU=L.ID_ZALADUNKU  
+          WHERE K.ID_ZALADUNKU IS NOT NULL AND CZY_UZYTA = 'TAK';
+      
+          
+           v_html :=
+              '<div class="stats-container">' ||
+              '  <div class="stats-box">' ||
+              '    <p>Nieprzypisane listy</p>' ||
+              '    <p>' || v_listy_oczekujace || '</p>' ||
+              '  </div>' ||
+              '  <div class="stats-box">' ||
+              '    <p>Oddelegowane listy</p>' ||
+              '    <p>' || v_listy_zrealizowane || '</p>' ||
+              '  </div>' ||
+              '  <div class="stats-box">' ||
+              '    <p>Oddelegowano kontenerów</p>' ||
+              '    <p>' || v_kontenery_oddelegowane || '</p>' ||
+              '  </div>' ||
+              '  <div class="stats-box">' ||
+              '    <p>Oddelegowano pasażerów</p>' ||
+              '    <p>' || v_pasazerowie_oddelegowani || '</p>' ||
+              '  </div>' ||
+              '</div>';
+      
+          RETURN v_html;
+      END;
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - i-h320
+    - t-Region--removeHeader js-removeLandmark
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    performance: 
+      lazy-loading: false
+
+buttons: 
+- # ====== Button: CREATE ======================================
+  id: 105007029680526113
+  identification: 
+    button-name: CREATE
+    label: Dodaj pustą listę przewozową
+
+  layout: 
+    sequence: 10
+    region: Listy Zaladunkowe # 105005305836526110
+    slot: RIGHT_OF_IR_SEARCH_BAR
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+    database-action: SQL INSERT action
+
+- # ====== Button: Assign ======================================
+  id: 119422721721864604
+  identification: 
+    button-name: Assign
+    label: Przypisz ładunek do listy
+
+  layout: 
+    sequence: 20
+    region: Listy Zaladunkowe # 105005305836526110
+    slot: RIGHT_OF_IR_SEARCH_BAR
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:32:&SESSION.::&DEBUG.:::'
+      page: 32 # Przypisanie do listy
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: RedirectKontenery ===========================
+  id: 168627326773000848
+  identification: 
+    button-name: RedirectKontenery
+    label: Przejdź do tabeli
+
+  layout: 
+    sequence: 10
+    region: WykresKontenery # 168624669845000821
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    alignment: Left center
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--stretch
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:16:&SESSION.::&DEBUG.:::'
+      page: 16 # Kontenery
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: RedirectPasazerowie =========================
+  id: 168627473278000849
+  identification: 
+    button-name: RedirectPasazerowie
+    label: Przejdź do tabeli
+
+  layout: 
+    sequence: 10
+    region: WykresPasazerowie # 168625174880000826
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    alignment: Left center
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--stretch
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:12:&SESSION.::&DEBUG.:::'
+      page: 12 # Lista pasażerów
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: ScrollDown ==================================
+  id: 168627597358000850
+  identification: 
+    button-name: ScrollDown
+    label: Przejdź do tabeli (Przewiń w dół)
+
+  layout: 
+    sequence: 10
+    region: WykresListy # 168624050558000815
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    alignment: Left center
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--stretch
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: RedirectWlasciciele =========================
+  id: 195355049856944501
+  identification: 
+    button-name: RedirectWlasciciele
+    label: Zobacz właścicieli
+
+  layout: 
+    sequence: 20
+    region: WykresKontenery # 168624669845000821
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    alignment: Left center
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--stretch
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:14:&SESSION.::&DEBUG.:::'
+      page: 14 # Właściciele Kontenerów
+
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: Edit Report - Dialog Closed =========
+  id: 105007356227526113
+  identification: 
+    name: Edit Report - Dialog Closed
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed or Canceled
+    selection-type: Region
+    region: Listy Zaladunkowe # 105005305836526110
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 105007883263526113
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Listy Zaladunkowe # 105005305836526110
+
+    execution: 
+      sequence: 10
+      event: Edit Report - Dialog Closed # 105007356227526113
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: RefreshWykresListy ==========================
+    id: 168626024542000835
+    identification: 
+      name: RefreshWykresListy
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: WykresListy # 168624050558000815
+
+    execution: 
+      sequence: 20
+      event: Edit Report - Dialog Closed # 105007356227526113
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: RefreshWykresKontenery ======================
+    id: 168626122841000836
+    identification: 
+      name: RefreshWykresKontenery
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: WykresKontenery # 168624669845000821
+
+    execution: 
+      sequence: 30
+      event: Edit Report - Dialog Closed # 105007356227526113
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: RefreshWykresPasazerowie ====================
+    id: 168626233913000837
+    identification: 
+      name: RefreshWykresPasazerowie
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: WykresPasazerowie # 168625174880000826
+
+    execution: 
+      sequence: 40
+      event: Edit Report - Dialog Closed # 105007356227526113
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: RefreshInfo =================================
+    id: 168627022201000845
+    identification: 
+      name: RefreshInfo
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: OpisWykresow # 168626300676000838
+
+    execution: 
+      sequence: 50
+      event: Edit Report - Dialog Closed # 105007356227526113
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Tworzenie nowej listy przewozowej ===
+  id: 105443576387928047
+  identification: 
+    name: Tworzenie nowej listy przewozowej
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: CREATE # 105007029680526113
+
+  actions: 
+  - # ====== Action: INSERT NEW ==================================
+    id: 105443685698928048
+    identification: 
+      name: INSERT NEW
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |
+        BEGIN
+          INSERT INTO LISTY_ZALADUNKOWE VALUES (L_ZALADUNKOWA_SEQ.NEXTVAL, DEFAULT, NULL, DEFAULT);
+          COMMIT;
+        END;
+
+    execution: 
+      sequence: 10
+      event: Tworzenie nowej listy przewozowej # 105443576387928047
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: RefreshLista ================================
+    id: 119422617530864603
+    identification: 
+      name: RefreshLista
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Listy Zaladunkowe # 105005305836526110
+
+    execution: 
+      sequence: 20
+      event: Tworzenie nowej listy przewozowej # 105443576387928047
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: RefreshWykresLista ==========================
+    id: 168625713165000832
+    identification: 
+      name: RefreshWykresLista
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: WykresListy # 168624050558000815
+
+    execution: 
+      sequence: 40
+      event: Tworzenie nowej listy przewozowej # 105443576387928047
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: RefreshInfo =================================
+    id: 168627136068000846
+    identification: 
+      name: RefreshInfo
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: OpisWykresow # 168626300676000838
+
+    execution: 
+      sequence: 50
+      event: Tworzenie nowej listy przewozowej # 105443576387928047
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Scroll ==============================
+  id: 195355183123944502
+  identification: 
+    name: Scroll
+
+  execution: 
+    sequence: 30
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: ScrollDown # 168627597358000850
+
+  actions: 
+  - # ====== Action: Scroll ======================================
+    id: 195355274482944503
+    identification: 
+      name: Scroll
+      action: Execute JavaScript Code
+
+    settings: 
+      code: |
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: 'smooth'
+        });
+
+    execution: 
+      sequence: 10
+      event: Scroll # 195355183123944502
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+

@@ -1,0 +1,965 @@
+---
+- # ====== List: Navigation Menu ===============================
+  id: 104633493000525431
+  identification: 
+    name: Navigation Menu
+
+  subscription: 
+    version-number: 470848921
+
+  source: 
+    type: Static Values
+
+  entries: 
+  - # ====== Entry: Cennik =======================================
+    id: 104943153276525865
+    label: 
+      label: Cennik
+
+    icon: 
+      image/icon-css-classes: fa-table
+
+    layout: 
+      sequence: 130
+      parent-entry: Paliwo # 105781292033131671
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:2:&SESSION.::&DEBUG.::::'
+        page: 2 # Cennik Paliw
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Magazyn ======================================
+    id: 104954078348525893
+    label: 
+      label: Magazyn
+
+    icon: 
+      image/icon-css-classes: fa-table
+
+    layout: 
+      sequence: 30
+      parent-entry: Paliwo # 105781292033131671
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:4:&SESSION.::&DEBUG.::::'
+        page: 4 # Magazyn Paliwa
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Zakup ========================================
+    id: 104966143444525949
+    label: 
+      label: Zakup
+
+    icon: 
+      image/icon-css-classes: fa-table
+
+    layout: 
+      sequence: 40
+      parent-entry: Paliwo # 105781292033131671
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:6:&SESSION.::&DEBUG.::::'
+        page: 6 # Zakup Paliwa
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Jednostki pływające ==========================
+    id: 104982088799526006
+    label: 
+      label: Jednostki pływające
+
+    icon: 
+      image/icon-css-classes: fa-ship
+
+    layout: 
+      sequence: 200
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:8:&SESSION.::&DEBUG.::::'
+        page: 8 # Jednostki pływające
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Listy Przewozowe =============================
+    id: 104998594915526063
+    label: 
+      label: Listy Przewozowe
+
+    icon: 
+      image/icon-css-classes: fa-file-text-o
+
+    layout: 
+      sequence: 60
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:10:&SESSION.::&DEBUG.::::'
+        page: 10 # Listy Przewozowe
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Pasażerowie ==================================
+    id: 105009488459526115
+    label: 
+      label: Pasażerowie
+
+    icon: 
+      image/icon-css-classes: fa-table
+
+    layout: 
+      sequence: 70
+      parent-entry: Listy Przewozowe # 104998594915526063
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:12:&SESSION.::&DEBUG.::::'
+        page: 12 # Lista pasażerów
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Właściciele kontenerów =======================
+    id: 105025190506526181
+    label: 
+      label: Właściciele kontenerów
+
+    icon: 
+      image/icon-css-classes: fa-table
+
+    layout: 
+      sequence: 80
+      parent-entry: Listy Przewozowe # 104998594915526063
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:14:&SESSION.::&DEBUG.::::'
+        page: 14 # Właściciele Kontenerów
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Kontenery ====================================
+    id: 105039399768526235
+    label: 
+      label: Kontenery
+
+    icon: 
+      image/icon-css-classes: fa-table
+
+    layout: 
+      sequence: 90
+      parent-entry: Listy Przewozowe # 104998594915526063
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:16:&SESSION.::&DEBUG.::::'
+        page: 16 # Kontenery
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Porty Docelowe ===============================
+    id: 105053812699526291
+    label: 
+      label: Porty Docelowe
+
+    icon: 
+      image/icon-css-classes: fa-building-o
+
+    layout: 
+      sequence: 210
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:18:&SESSION.::&DEBUG.::::'
+        page: 18 # Porty Docelowe
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Pracownicy ===================================
+    id: 105068105003526352
+    label: 
+      label: Pracownicy
+
+    icon: 
+      image/icon-css-classes: fa-table
+
+    layout: 
+      sequence: 110
+      parent-entry: Kadra # 123938275899978788
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:20:&SESSION.::&DEBUG.::::'
+        page: 20 # Lista pracowników
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Lista załóg i Role w załogach ================
+    id: 105083482320526408
+    label: 
+      label: Lista załóg i Role w załogach
+
+    icon: 
+      image/icon-css-classes: fa-table
+
+    layout: 
+      sequence: 120
+      parent-entry: Kadra # 123938275899978788
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:22:&SESSION.::&DEBUG.::::'
+        page: 22 # Załogi i Role pracowników
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Kursy ========================================
+    id: 105120599505526570
+    label: 
+      label: Kursy
+
+    icon: 
+      image/icon-css-classes: fa-map-signs
+
+    layout: 
+      sequence: 20
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:28:&SESSION.::&DEBUG.::::'
+        page: 28 # Kursy
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Panel administracyjny ========================
+    id: 105275516051526878
+    label: 
+      label: Panel administracyjny
+
+    icon: 
+      image/icon-css-classes: fa-user-wrench
+
+    layout: 
+      sequence: 10000
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:10000:&SESSION.::&DEBUG.::::'
+        page: 10000 # Administration
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: Administration Rights # 104926884997525824
+
+  - # ====== Entry: Paliwo =======================================
+    id: 105781292033131671
+    label: 
+      label: Paliwo
+
+    icon: 
+      image/icon-css-classes: fa-bolt
+
+    layout: 
+      sequence: 160
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 30
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:30:&SESSION.::&DEBUG.::::'
+        page: 30 # STAN PALIWA
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Kadra ========================================
+    id: 123938275899978788
+    label: 
+      label: Kadra
+
+    icon: 
+      image/icon-css-classes: fa-users-alt
+
+    layout: 
+      sequence: 170
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 31
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Pełna lista przypisań pracowników ============
+    id: 212693580154840835
+    label: 
+      label: Pełna lista przypisań pracowników
+
+    icon: 
+      image/icon-css-classes: fa-table
+
+    layout: 
+      sequence: 180
+      parent-entry: Lista załóg i Role w załogach # 105083482320526408
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 26
+      - 27
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:26:&SESSION.::&DEBUG.::::'
+        page: 26 # Lista przypisań pracowników
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Strona główna ================================
+    id: 331609529970862316
+    label: 
+      label: Strona główna
+
+    icon: 
+      image/icon-css-classes: fa-dashboard
+
+    layout: 
+      sequence: 10
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 1
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:1:&SESSION.::&DEBUG.::::'
+        page: 1 # Main
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+- # ====== List: Navigation Bar ================================
+  id: 104922831460525810
+  identification: 
+    name: Navigation Bar
+
+  subscription: 
+    version-number: 430340046
+
+  source: 
+    type: Static Values
+
+  entries: 
+  - # ====== Entry: &APP_USER. ===================================
+    id: 105274050330526876
+    label: 
+      label: '&APP_USER.'
+
+    icon: 
+      image/icon-css-classes: fa-user
+
+    layout: 
+      sequence: 10
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: '#'
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      2.: has-username
+
+  - # ====== Entry: --- ==========================================
+    id: 105274503897526876
+    label: 
+      label: '---'
+
+    layout: 
+      sequence: 20
+      parent-entry: '&APP_USER.' # 105274050330526876
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: separator
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    server-side-condition: 
+      type: User is Authenticated (not public)
+
+  - # ====== Entry: Sign Out =====================================
+    id: 105274951841526877
+    label: 
+      label: Sign Out
+
+    icon: 
+      image/icon-css-classes: fa-sign-out
+
+    layout: 
+      sequence: 30
+      parent-entry: '&APP_USER.' # 105274050330526876
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: '&LOGOUT_URL.'
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    server-side-condition: 
+      type: User is Authenticated (not public)
+
+- # ====== List: Page Navigation ===============================
+  id: 105252577303526825
+  identification: 
+    name: Page Navigation
+
+  subscription: 
+    version-number: 452193540
+
+  source: 
+    type: Static Values
+
+  entries: 
+  - # ====== Entry: Rafineria ====================================
+    id: 105252984766526825
+    label: 
+      label: Rafineria
+
+    icon: 
+      image/icon-css-classes: fa-table
+
+    layout: 
+      sequence: 20
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:2:&APP_SESSION.::&DEBUG.:::'
+        page: 2 # Cennik Paliw
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Magazyn Paliwa ===============================
+    id: 105253335323526825
+    label: 
+      label: Magazyn Paliwa
+
+    icon: 
+      image/icon-css-classes: fa-table
+
+    layout: 
+      sequence: 30
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:4:&APP_SESSION.::&DEBUG.:::'
+        page: 4 # Magazyn Paliwa
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Zakupy =======================================
+    id: 105253711791526826
+    label: 
+      label: Zakupy
+
+    icon: 
+      image/icon-css-classes: fa-table
+
+    layout: 
+      sequence: 40
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:6:&APP_SESSION.::&DEBUG.:::'
+        page: 6 # Zakup Paliwa
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Statki =======================================
+    id: 105254137605526826
+    label: 
+      label: Statki
+
+    icon: 
+      image/icon-css-classes: fa-table
+
+    layout: 
+      sequence: 50
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:8:&APP_SESSION.::&DEBUG.:::'
+        page: 8 # Jednostki pływające
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Listy Zaladunkowe ============================
+    id: 105254536369526826
+    label: 
+      label: Listy Zaladunkowe
+
+    icon: 
+      image/icon-css-classes: fa-table
+
+    layout: 
+      sequence: 60
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:10:&APP_SESSION.::&DEBUG.:::'
+        page: 10 # Listy Przewozowe
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Pasazerowie ==================================
+    id: 105254977603526827
+    label: 
+      label: Pasazerowie
+
+    icon: 
+      image/icon-css-classes: fa-table
+
+    layout: 
+      sequence: 70
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:12:&APP_SESSION.::&DEBUG.:::'
+        page: 12 # Lista pasażerów
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Wlasciciele ==================================
+    id: 105255329061526827
+    label: 
+      label: Wlasciciele
+
+    icon: 
+      image/icon-css-classes: fa-table
+
+    layout: 
+      sequence: 80
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:14:&APP_SESSION.::&DEBUG.:::'
+        page: 14 # Właściciele Kontenerów
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Kontenery ====================================
+    id: 105255759613526827
+    label: 
+      label: Kontenery
+
+    icon: 
+      image/icon-css-classes: fa-table
+
+    layout: 
+      sequence: 90
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:16:&APP_SESSION.::&DEBUG.:::'
+        page: 16 # Kontenery
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Porty Docelowe ===============================
+    id: 105256186776526828
+    label: 
+      label: Porty Docelowe
+
+    icon: 
+      image/icon-css-classes: fa-table
+
+    layout: 
+      sequence: 100
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:18:&APP_SESSION.::&DEBUG.:::'
+        page: 18 # Porty Docelowe
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Pracownicy ===================================
+    id: 105256522858526828
+    label: 
+      label: Pracownicy
+
+    icon: 
+      image/icon-css-classes: fa-table
+
+    layout: 
+      sequence: 110
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:20:&APP_SESSION.::&DEBUG.:::'
+        page: 20 # Lista pracowników
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Zalogi =======================================
+    id: 105256982707526828
+    label: 
+      label: Zalogi
+
+    icon: 
+      image/icon-css-classes: fa-table
+
+    layout: 
+      sequence: 120
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:22:&APP_SESSION.::&DEBUG.:::'
+        page: 22 # Załogi i Role pracowników
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Role Pracownikow =============================
+    id: 105257339453526829
+    label: 
+      label: Role Pracownikow
+
+    icon: 
+      image/icon-css-classes: fa-table
+
+    layout: 
+      sequence: 130
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:24:&APP_SESSION.::&DEBUG.:::'
+        page: 24 # Role Pracowników
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Kursy ========================================
+    id: 105258124708526829
+    label: 
+      label: Kursy
+
+    icon: 
+      image/icon-css-classes: fa-table
+
+    layout: 
+      sequence: 150
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:28:&APP_SESSION.::&DEBUG.:::'
+        page: 28 # Kursy
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+- # ====== List: Application Configuration =====================
+  id: 105276682522526879
+  identification: 
+    name: Application Configuration
+
+  subscription: 
+    version-number: 430340050
+
+  source: 
+    type: Static Values
+
+  configuration: 
+    build-option: 'Feature: Configuration Options' # 104925712432525823
+
+  entries: 
+  - # ====== Entry: Configuration Options ========================
+    id: 105277025974526880
+    label: 
+      label: Configuration Options
+
+    icon: 
+      image/icon-css-classes: fa-sliders
+
+    layout: 
+      sequence: 10
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:10010:&APP_SESSION.::&DEBUG.:10010::'
+        page: 10010 # Configuration Options
+        clear-cache: 10010
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Enable or disable application features
+
+    configuration: 
+      build-option: 'Feature: Configuration Options' # 104925712432525823
+
+- # ====== List: User Interface ================================
+  id: 105277383793526880
+  identification: 
+    name: User Interface
+
+  subscription: 
+    version-number: 430340050
+
+  source: 
+    type: Static Values
+
+  configuration: 
+    build-option: 'Feature: Theme Style Selection' # 104926177212525823
+
+  entries: 
+  - # ====== Entry: Theme Style Selection ========================
+    id: 105277771866526881
+    label: 
+      label: Theme Style Selection
+
+    icon: 
+      image/icon-css-classes: fa-paint-brush
+
+    layout: 
+      sequence: 10
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:10020:&APP_SESSION.::&DEBUG.:10020::'
+        page: 10020 # Application Appearance
+        clear-cache: 10020
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Set the default application look and feel
+
+    configuration: 
+      build-option: 'Feature: Theme Style Selection' # 104926177212525823
+

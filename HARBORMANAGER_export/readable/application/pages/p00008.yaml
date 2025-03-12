@@ -1,0 +1,772 @@
+---
+# ====== Page: Jednostki pływające ===========================
+id: 8
+identification: 
+  name: Jednostki pływające
+  alias: STATKI1
+  title: Jednostki pływające - HarborManager
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+help: 
+  help-text: |
+    <p>To find data enter a search term into the search dialog, or click on the column headings to limit the records returned.</p>
+    
+    <p>You can perform numerous functions by clicking the <strong>Actions</strong> button. This includes selecting the columns that are displayed / hidden and their display sequence, plus numerous data and format functions.  You can also define additional views of the data using the chart, group by, and pivot options.</p>
+    
+    <p>If you want to save your customizations select report, or click download to unload the data. Enter you email address and time frame under subscription to be sent the data on a regular basis.<p>
+    
+    <p>For additional information click Help at the bottom of the Actions menu.</p> 
+    
+    <p>Click the <strong>Reset</strong> button to reset the interactive report back to the default settings.</p>
+
+regions: 
+- # ====== Region: Statki ======================================
+  id: 104992460737526056
+  identification: 
+    name: Statki
+    type: Interactive Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select  NUMER_SERYJNY,
+              NAZWA,
+              WYPORNOSC_TONA,
+              MAX_L_PASAZEROW,
+              MAX_DYSTANS_KM,
+              SPALANIE_PALIWA_L,
+              TYP_PALIWA,
+              CASE 
+                  WHEN CzyStatekWolny_display(NUMER_SERYJNY, SYSTIMESTAMP) = 'Wolny' THEN 'lightgreen'
+              ELSE 'lightcoral'
+              END AS STATUS_KOLOR
+        from STATKI
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: None
+    render-components: Above Content
+
+  advanced: 
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 104992583918526056
+    link: 
+      link-column: Link to Custom Target
+      target: 
+        url: 'f?p=&APP_ID.:9:&APP_SESSION.::&DEBUG.:RP:P9_NUMER_SERYJNY:\#NUMER_SERYJNY#\'
+        page: 9 # Dodawanie jednostki pływającej
+        clear-cache: RP
+        values: 
+          p9_numer_seryjny: '#NUMER_SERYJNY#'
+
+      link-icon: <span role="img" aria-label="Edit" class="fa fa-edit" title="Edit"></span>
+
+    pagination: 
+      type: Row Ranges X to Y
+      display-position: Bottom - Right
+
+    performance: 
+      lazy-loading: false
+
+    messages: 
+      when-no-data-found: No data found.
+      when-more-data-found: 'The maximum row count for this report is #MAX_ROW_COUNT# rows.  Please apply a filter to reduce the number of records in your query.'
+
+    search-bar: 
+      include-search-bar: true
+      search-field: true
+      finder-drop-down: true
+      reports-select-list: true
+      rows-per-page-selector: false
+
+    actions-menu: 
+      include-actions-menu: true
+      filter: true
+      select-columns: true
+      rows-per-page: true
+      sort: true
+      control-break: true
+      highlight: true
+      compute: true
+      aggregate: true
+      chart: true
+      group-by: true
+      pivot: true
+      flashback: true
+      save-report: true
+      save-public-report: false
+      reset: true
+      help: true
+      download: true
+      subscription: true
+
+    download: 
+      formats: 
+      - CSV
+      - HTML
+      - Excel
+      - PDF
+      send-as-email: true
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 105161573826526706
+      identification: 
+        name: Primary Report
+        alias: 1051616
+
+    columns: 
+    - # ====== Column: NUMER_SERYJNY ===============================
+      id: 104993241950526058
+      identification: 
+        column-name: NUMER_SERYJNY
+        type: Plain Text
+
+      heading: 
+        heading: Numer Seryjny
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 0
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: '<span style="background-color: #STATUS_KOLOR#; display: block;">#NUMER_SERYJNY#</span>'
+
+      source: 
+        primary-key: true
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: NAZWA =======================================
+      id: 104993668240526058
+      identification: 
+        column-name: NAZWA
+        type: Link
+
+      heading: 
+        heading: Nazwa jednostki
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 2
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      link: 
+        target: 
+          url: 'f?p=&APP_ID.:28:&APP_SESSION.::&DEBUG.:28,RR:IR_NR_SER_STATKU:\#NAZWA#\'
+          page: 28 # Kursy
+          clear-cache: 28,RR
+          values: 
+            ir_nr_ser_statku: '#NAZWA#'
+
+        link-text: '#NAZWA#'
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: WYPORNOSC_TONA ==============================
+      id: 104994077723526058
+      identification: 
+        column-name: WYPORNOSC_TONA
+        type: Plain Text
+
+      heading: 
+        heading: Wyporność [T]
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 3
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G999G999G999G999G999G990
+
+      column-formatting: 
+        html-expression: '<span style="background-color: #STATUS_KOLOR#; display: block;">#WYPORNOSC_TONA#</span>'
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: MAX_L_PASAZEROW =============================
+      id: 104994424071526059
+      identification: 
+        column-name: MAX_L_PASAZEROW
+        type: Plain Text
+
+      heading: 
+        heading: Maks. liczba pasażerów
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 4
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G999G999G999G999G999G990
+
+      column-formatting: 
+        html-expression: '<span style="background-color: #STATUS_KOLOR#; display: block;">#MAX_L_PASAZEROW#</span>'
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: MAX_DYSTANS_KM ==============================
+      id: 104994873868526059
+      identification: 
+        column-name: MAX_DYSTANS_KM
+        type: Plain Text
+
+      heading: 
+        heading: Maks. zasięg [km]
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 5
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G999G999G999G999G999G990
+
+      column-formatting: 
+        html-expression: '<span style="background-color: #STATUS_KOLOR#; display: block;">#MAX_DYSTANS_KM#</span>'
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: SPALANIE_PALIWA_L ===========================
+      id: 104995259667526060
+      identification: 
+        column-name: SPALANIE_PALIWA_L
+        type: Plain Text
+
+      heading: 
+        heading: Spalanie paliwa [L/km]
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 6
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G999G999G999G999G999G990
+
+      column-formatting: 
+        html-expression: '<span style="background-color: #STATUS_KOLOR#; display: block;">#SPALANIE_PALIWA_L#</span>'
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: TYP_PALIWA ==================================
+      id: 104995684547526060
+      identification: 
+        column-name: TYP_PALIWA
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: MAGAZYN_PALIWA.TYP_PALIWA # 104969543982525992
+
+      heading: 
+        heading: Typ używanego paliwa
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 7
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: '<span style="background-color: #STATUS_KOLOR#; display: block;">#TYP_PALIWA#</span>'
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: STATUS_KOLOR ================================
+      id: 205620437860214636
+      identification: 
+        column-name: STATUS_KOLOR
+        type: Hidden
+
+      heading: 
+        heading: Status Kolor
+
+      layout: 
+        sequence: 27
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: true
+
+    printing: 
+      output: 
+        layout: Default Report Layout
+        view-file-as: Attachment
+
+      page: 
+        size: Letter
+        orientation: Landscape
+        units: Inches
+        width: 11
+        height: 8.5
+        border-width: 0.5
+        border-color: '#666666'
+
+      page-header: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+        page-header-text: Statki
+
+      column-headings: 
+        font: Helvetica
+        font-weight: Bold
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#EEEEEE'
+
+      columns: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#FFFFFF'
+
+      page-footer: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+
+- # ====== Region: Breadcrumb ==================================
+  id: 104997343069526062
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 104632925000525429
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: New =========================================
+  id: 205620649984214638
+  identification: 
+    name: New
+    type: Static Content
+
+  source: 
+    html-code: |
+      <div style="display: flex; align-items: center; font-size: 14px;">
+          <div style="width: 20px; height: 20px; background-color: lightgreen; margin-right: 10px;"></div>
+          <span>Wolny</span>
+          <div style="width: 20px; height: 20px; background-color: lightcoral; margin-left: 20px; margin-right: 10px;"></div>
+          <span>Zajęty</span>
+      </div>
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--removeHeader js-removeLandmark
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+buttons: 
+- # ====== Button: CREATE ======================================
+  id: 104996109728526061
+  identification: 
+    button-name: CREATE
+    label: Dodaj nową jednostkę
+
+  layout: 
+    sequence: 10
+    region: Statki # 104992460737526056
+    slot: RIGHT_OF_IR_SEARCH_BAR
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:9:&APP_SESSION.::&DEBUG.:9::'
+      page: 9 # Dodawanie jednostki pływającej
+      clear-cache: 9
+
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: Edit Report - Dialog Closed =========
+  id: 104996483286526061
+  identification: 
+    name: Edit Report - Dialog Closed
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Region
+    region: Statki # 104992460737526056
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 104996988794526061
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Statki # 104992460737526056
+
+    execution: 
+      sequence: 10
+      event: Edit Report - Dialog Closed # 104996483286526061
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: SHOW_STATUS =========================
+  id: 205620216535214634
+  identification: 
+    name: SHOW_STATUS
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P8_SHOW_STATUS
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 205620304358214635
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: |
+        var isChecked = $v("P8_SHOW_STATUS") === "Y";
+        
+        if (isChecked) {
+            $("td[headers='STATUS_KOLOR']:contains('lightgreen')").parent().css("background-color", "lightgreen");
+            $("td[headers='STATUS_KOLOR']:contains('lightcoral')").parent().css("background-color", "lightcoral");
+        } else {
+            $("td[headers='STATUS_KOLOR']").parent().css("background-color", "");
+        }
+
+    execution: 
+      sequence: 10
+      event: SHOW_STATUS # 205620216535214634
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 205620532379214637
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Statki # 104992460737526056
+
+    execution: 
+      sequence: 20
+      event: SHOW_STATUS # 205620216535214634
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
