@@ -1,4 +1,5 @@
 # HarborManager
+## Authors: Adam Bednarek, Miłosz Sobol
 !!!**This is an export from my Oracle Apex workspace!!! WRITTEN IN PL**
 
 Since I've lost the workspace, I cannot guarantee that it's going to work/be complete after importing the project. <ins>Just in case, I've also included a DB SQL script which can be used seperately.</ins>
