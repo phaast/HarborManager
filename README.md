@@ -6,7 +6,7 @@ Since I've lost the workspace, I cannot guarantee that it's going to work/be com
 
 ## Description
 
-*HarborManager* is a database application designed in **Oracle Apex**. The database was writted in **Oracle PL/SQL**. The website also includes a few custom **CSS** and **JavaScript** features.
+*HarborManager* is a database application designed in **Oracle Apex**. The database was written in **Oracle PL/SQL**. The website also includes a few custom **CSS** and **JavaScript** features.
 
 - The application is designed to manage port operations, particularly ship routes, by assigning resources such as ships cargo and working crew. <ins>Please keep in mind that it's general goal is to create a tycoon-game-like experience; it's meant to serve as a (limited) simulation.</ins>
 
